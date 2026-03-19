@@ -1,0 +1,9 @@
+<resources>
+    <color name="colorPrimary">#3498DB</color>
+    <color name="colorPrimaryDark">#1B263B</color>
+    <color name="colorAccent">#2ECC71</color>
+    <color name="dark_bg">#0D1B2A</color>
+    <color name="card">#1B263B</color>
+    <color name="success">#2ECC71</color>
+    <color name="danger">#E74C3C</color>
+</resources>
