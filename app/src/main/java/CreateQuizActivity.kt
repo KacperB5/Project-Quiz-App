@@ -1,5 +1,6 @@
 package com.example.mobilequizapp
 
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.*
 import android.widget.*
@@ -22,6 +23,8 @@ class CreateQuizActivity : AppCompatActivity() {
     private var timeLeft = 100
 
     private val questions = mutableListOf<Question>()
+
+    private var startTimeInMillis: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,7 +74,16 @@ class CreateQuizActivity : AppCompatActivity() {
                     )
                 }
 
+                questions.shuffle()
+
+                if (questions.size > 5) {
+                    val randomFive = questions.take(5)
+                    questions.clear()
+                    questions.addAll(randomFive)
+                }
+
                 if (questions.isNotEmpty()) {
+                    startTimeInMillis = System.currentTimeMillis()
                     loadQuestion()
                 } else {
                     Toast.makeText(this, "Brak pytań w bazie danych.", Toast.LENGTH_SHORT).show()
@@ -97,7 +109,7 @@ class CreateQuizActivity : AppCompatActivity() {
 
         answers.forEachIndexed { i, btn ->
             btn.text = q.answers[i]
-            btn.setBackgroundColor(Color.LTGRAY)
+            btn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#333333"))
             btn.isEnabled = true
         }
 
@@ -114,11 +126,11 @@ class CreateQuizActivity : AppCompatActivity() {
         answers.forEach { it.isEnabled = false }
 
         if (selectedIndex == correctIndex) {
-            answers[selectedIndex].setBackgroundColor(Color.GREEN)
+            answers[selectedIndex].backgroundTintList = ColorStateList.valueOf(Color.GREEN)
             score++
         } else {
-            answers[selectedIndex].setBackgroundColor(Color.RED)
-            answers[correctIndex].setBackgroundColor(Color.GREEN)
+            answers[selectedIndex].backgroundTintList = ColorStateList.valueOf(Color.RED)
+            answers[correctIndex].backgroundTintList = ColorStateList.valueOf(Color.GREEN)
         }
 
         handler.postDelayed({
@@ -153,8 +165,26 @@ class CreateQuizActivity : AppCompatActivity() {
     private fun showScore() {
         setContentView(R.layout.activity_score)
 
+        val endTimeInMillis = System.currentTimeMillis()
+        val totalTimeSeconds = ((endTimeInMillis - startTimeInMillis) / 1000).toInt()
+        val minutes = totalTimeSeconds / 60
+        val seconds = totalTimeSeconds % 60
+        val timeFormatted = String.format("%02d:%02d", minutes, seconds)
+
+        val percentage = if (questions.isNotEmpty()) (score * 100) / questions.size else 0
+
         val tvScore = findViewById<TextView>(R.id.tvScore)
-        tvScore.text = "Twój wynik: $score / ${questions.size}"
+        val tvPercentage = findViewById<TextView>(R.id.tvPercentage)
+        val tvTime = findViewById<TextView>(R.id.tvTime)
+
+        tvScore.text = "$score / ${questions.size}"
+        tvPercentage.text = "$percentage%"
+        tvTime.text = "Czas gry: $timeFormatted"
+
+        val btnReturnMenu = findViewById<Button>(R.id.btnReturnMenu)
+        btnReturnMenu.setOnClickListener {
+            finish()
+        }
     }
 }
 
