@@ -28,5 +28,9 @@
 
         <activity android:name=".WelcomeActivity" />
 
+        <activity android:name=".MenuActivity" />
+
+        <activity android:name=".CreateQuizActivity" />
+
     </application>
 </manifest>
