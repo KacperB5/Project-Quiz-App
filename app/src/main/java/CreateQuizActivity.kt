@@ -37,6 +37,8 @@ class CreateQuizActivity : AppCompatActivity() {
 
         answers = listOf(btn1, btn2, btn3, btn4)
 
+        answers.forEach { it.isEnabled = false }
+
         loadQuizFromApi()
 
         answers.forEachIndexed { index, button ->
@@ -47,7 +49,7 @@ class CreateQuizActivity : AppCompatActivity() {
     }
 
     private fun loadQuizFromApi() {
-        val url = "https://quiz-app.alwaysdata.net/api/get_quiz.php"
+        val url = "https://quiz-app.alwaysdata.net/api/quizzes.php"
 
         val request = JsonArrayRequest(
             Request.Method.GET, url, null,
@@ -69,7 +71,11 @@ class CreateQuizActivity : AppCompatActivity() {
                     )
                 }
 
-                loadQuestion()
+                if (questions.isNotEmpty()) {
+                    loadQuestion()
+                } else {
+                    Toast.makeText(this, "Brak pytań w bazie danych.", Toast.LENGTH_SHORT).show()
+                }
             },
             { error ->
                 Toast.makeText(this, "Błąd API: $error", Toast.LENGTH_SHORT).show()
@@ -99,6 +105,8 @@ class CreateQuizActivity : AppCompatActivity() {
     }
 
     private fun checkAnswer(selectedIndex: Int) {
+        if (questions.isEmpty() || currentQuestion >= questions.size) return
+
         stopTimer()
 
         val correctIndex = questions[currentQuestion].correctIndex

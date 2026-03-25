@@ -22,7 +22,6 @@ class RegisterActivity : AppCompatActivity() {
         val etRegPassword = findViewById<EditText>(R.id.etRegPassword)
         val btnRegisterSubmit = findViewById<Button>(R.id.btnRegisterSubmit)
 
-        // 1. Znajdujemy przycisk Powróć
         val btnBack = findViewById<Button>(R.id.btnBack)
 
         btnRegisterSubmit.setOnClickListener {

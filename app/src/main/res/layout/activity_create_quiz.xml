@@ -5,7 +5,6 @@
     android:background="#1E1E1E"
     android:padding="16dp">
 
-    <!-- Pytanie -->
     <TextView
         android:id="@+id/tvQuestion"
         android:layout_width="match_parent"
@@ -14,18 +13,15 @@
         android:textSize="20sp"
         android:textColor="#FFFFFF" />
 
-    <!-- miejsce na obraz -->
     <Space
         android:layout_width="match_parent"
         android:layout_height="32dp" />
 
-    <!-- wypycha dół -->
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <!-- pasek czasu -->
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
@@ -35,9 +31,6 @@
         android:progress="100"
         android:layout_marginBottom="12dp" />
 
-    <!-- ODPOWIEDZI -->
-
-    <!-- Rząd 1 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,7 +52,6 @@
             android:text="B" />
     </LinearLayout>
 
-    <!-- Rząd 2 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

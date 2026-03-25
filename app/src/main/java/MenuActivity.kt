@@ -14,13 +14,11 @@ class MenuActivity : AppCompatActivity() {
         val btnStworzQuiz = findViewById<Button>(R.id.btnStworzQuiz)
         val btnWybierzQuiz = findViewById<Button>(R.id.btnWybierzQuiz)
 
-        // Przycisk "Stwórz Quiz"
         btnStworzQuiz.setOnClickListener {
             val intent = Intent(this, CreateQuizActivity::class.java)
             startActivity(intent)
         }
 
-        // Przycisk "Wybierz Quiz"
         btnWybierzQuiz.setOnClickListener {
             val intent = Intent(this, ChooseQuizActivity::class.java)
             startActivity(intent)

@@ -12,7 +12,6 @@
         android:layout_marginBottom="16dp"
         android:src="@drawable/logo" />
 
-    <!-- To wypycha przyciski na dół -->
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -25,7 +24,7 @@
         android:layout_marginBottom="16dp"
         android:backgroundTint="#6200EE"
         android:textSize="35dp"
-        android:text="Stwórz Quiz"
+        android:text="Rozpocznij Quiz"
         android:textColor="#FFFFFF" />
 
     <Button
