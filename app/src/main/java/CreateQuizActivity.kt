@@ -32,7 +32,6 @@ class CreateQuizActivity : AppCompatActivity() {
         val etA3 = findViewById<EditText>(R.id.etAnswer3)
         val etA4 = findViewById<EditText>(R.id.etAnswer4)
 
-        // Ustawienie Spinnera dla poprawnej odpowiedzi z białym tekstem
         val options = arrayOf("Odpowiedź A", "Odpowiedź B", "Odpowiedź C", "Odpowiedź D")
         val correctAdapter = ArrayAdapter(this, R.layout.spinner_item, options)
         correctAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -82,7 +81,6 @@ class CreateQuizActivity : AppCompatActivity() {
                         categoryList.add(CategoryInfo(id, title))
                         names.add(title)
                     }
-                    // Używamy spinner_item dla białego tekstu
                     val adapter = ArrayAdapter(this, R.layout.spinner_item, names)
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                     spinnerCategory.adapter = adapter

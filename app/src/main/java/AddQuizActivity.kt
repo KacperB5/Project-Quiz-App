@@ -31,7 +31,6 @@ class AddQuizActivity : AppCompatActivity() {
     private fun createNewCategory(title: String) {
         val url = "https://quiz-app.alwaysdata.net/api/add_quiz_category.php"
 
-        // Pobieramy autora z pamięci telefonu
         val sharedPref = getSharedPreferences("QuizAppPrefs", MODE_PRIVATE)
         val username = sharedPref.getString("USERNAME", "Nieznany") ?: "Nieznany"
 
@@ -45,7 +44,7 @@ class AddQuizActivity : AppCompatActivity() {
             override fun getParams(): MutableMap<String, String> {
                 val params = HashMap<String, String>()
                 params["title"] = title
-                params["author"] = username // Przesyłamy autora do PHP
+                params["author"] = username
                 return params
             }
         }

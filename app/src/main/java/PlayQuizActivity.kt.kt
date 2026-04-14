@@ -20,10 +20,8 @@ class PlayQuizActivity : AppCompatActivity() {
     private var currentQuestionIndex = 0
     private var score = 0
 
-    // Zmienna do mierzenia czasu gry
     private var startTimeInMillis: Long = 0
 
-    // Elementy UI
     private lateinit var tvQuestion: TextView
     private lateinit var btnA: Button
     private lateinit var btnB: Button
@@ -68,7 +66,6 @@ class PlayQuizActivity : AppCompatActivity() {
                     }
                     if (questions.isNotEmpty()) {
 
-                        // --- NOWOŚĆ: Tasujemy pytania i bierzemy MAKS 10 ---
                         questions.shuffle()
                         if (questions.size > 10) {
                             val subList = questions.take(10)
@@ -102,10 +99,9 @@ class PlayQuizActivity : AppCompatActivity() {
         btnD.text = q.a4
 
         val buttons = listOf(btnA, btnB, btnC, btnD)
-        val defaultColor = ColorStateList.valueOf(Color.parseColor("#333333")) // Zgodnie z Twoim XML
+        val defaultColor = ColorStateList.valueOf(Color.parseColor("#333333"))
 
         buttons.forEachIndexed { index, button ->
-            // --- NOWOŚĆ: Resetujemy wygląd po poprzednim pytaniu ---
             button.isEnabled = true
             button.backgroundTintList = defaultColor
 
@@ -117,20 +113,16 @@ class PlayQuizActivity : AppCompatActivity() {
         val correctIndex = questions[currentQuestionIndex].correctIndex
         val buttons = listOf(btnA, btnB, btnC, btnD)
 
-        // Blokujemy przyciski na czas animacji, żeby nie klikać dwa razy
         buttons.forEach { it.isEnabled = false }
 
-        // --- NOWOŚĆ: Kolorowanie przycisków ---
         if (selectedIndex == correctIndex) {
             score++
-            clickedButton.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#4CAF50")) // Zielony
+            clickedButton.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#4CAF50"))
         } else {
-            clickedButton.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F44336")) // Czerwony
-            // Podświetlamy poprawną odpowiedź dla użytkownika
+            clickedButton.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F44336"))
             buttons[correctIndex].backgroundTintList = ColorStateList.valueOf(Color.parseColor("#4CAF50"))
         }
 
-        // Czekamy 1.5 sekundy (1500 milisekund), żeby gracz zobaczył co wybrał, i lecimy dalej
         Handler(Looper.getMainLooper()).postDelayed({
             currentQuestionIndex++
             if (currentQuestionIndex < questions.size) {
@@ -142,10 +134,8 @@ class PlayQuizActivity : AppCompatActivity() {
     }
 
     private fun showFinalScore() {
-        // Zmieniamy wygląd ekranu na podsumowanie!
         setContentView(R.layout.activity_score)
 
-        // Obliczamy czas gry
         val endTimeInMillis = System.currentTimeMillis()
         val totalTimeSeconds = ((endTimeInMillis - startTimeInMillis) / 1000).toInt()
         val minutes = totalTimeSeconds / 60
@@ -154,7 +144,6 @@ class PlayQuizActivity : AppCompatActivity() {
 
         val percentage = if (questions.isNotEmpty()) (score * 100) / questions.size else 0
 
-        // Szukamy elementów na nowym ekranie wyników
         val tvScore = findViewById<TextView>(R.id.tvScore)
         val tvPercentage = findViewById<TextView>(R.id.tvPercentage)
         val tvTime = findViewById<TextView>(R.id.tvTime)
@@ -194,7 +183,6 @@ class PlayQuizActivity : AppCompatActivity() {
     }
 }
 
-// Klasa pomocnicza dla pytania
 data class Question(
     val text: String,
     val a1: String,
