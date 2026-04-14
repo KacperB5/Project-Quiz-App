@@ -6,34 +6,45 @@
     android:padding="32dp">
 
     <ImageView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="16dp"
         android:src="@drawable/logo" />
 
-    <View
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <Button
-        android:id="@+id/btnStworzQuiz"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#6200EE"
-        android:textSize="35dp"
-        android:text="Rozpocznij Quiz"
-        android:textColor="#FFFFFF" />
+        android:layout_height="wrap_content"
+        android:text="Tryb Singleplayer"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        android:layout_marginBottom="32dp" />
 
     <Button
         android:id="@+id/btnWybierzQuiz"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#CCCCCC"
+        android:text="Wybierz gotowy Quiz"
+        android:textColor="#000000" />
+
+    <Button
+        android:id="@+id/btnStworzQuiz"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#6200EE"
+        android:text="Stwórz własny Quiz"
+        android:textColor="#FFFFFF" />
+
+    <Button
+        android:id="@+id/btnBackToWelcome"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:backgroundTint="#03DAC5"
-        android:text="Wybierz Quiz"
-        android:textSize="35dp"
+        android:text="Powrót"
         android:textColor="#000000" />
 
 </LinearLayout>

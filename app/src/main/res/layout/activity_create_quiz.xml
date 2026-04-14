@@ -1,109 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#1E1E1E"
-    android:padding="16dp">
+    android:fillViewport="true">
 
-    <com.google.android.material.card.MaterialCardView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:cardBackgroundColor="#2C2C2C"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp"
-        app:strokeWidth="2dp"
-        app:strokeColor="#6200EE">
+        android:orientation="vertical"
+        android:padding="24dp">
 
         <TextView
-            android:id="@+id/tvQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="24dp"
-            android:text="Pytanie"
+            android:text="Kreator Pytań"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
-            android:textSize="22sp"
+            android:textSize="28sp"
             android:textStyle="bold"
-            android:lineSpacingExtra="6dp" />
+            android:layout_marginBottom="24dp" />
 
-    </com.google.android.material.card.MaterialCardView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wybierz kategorię:"
+            android:textColor="#AAAAAA" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="#FFFFFF" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:max="100"
-        android:progress="100"
-        android:layout_marginBottom="16dp"
-        android:progressTint="#03DAC5" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAnswer1"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            app:cornerRadius="12dp"
-            app:backgroundTint="#333333"
+        <Button
+            android:id="@+id/btnAddCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+ Utwórz zupełnie nowy quiz"
+            android:backgroundTint="#444444"
             android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:text="A" />
+            android:layout_marginBottom="16dp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAnswer2"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            app:cornerRadius="12dp"
-            app:backgroundTint="#333333"
+        <EditText
+            android:id="@+id/etNewQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Wpisz treść pytania..."
+            android:textColorHint="#888888"
             android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:text="B" />
+            android:backgroundTint="#03DAC5"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/etAnswer1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Odpowiedź A"
+            android:textColorHint="#888888"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#6200EE" />
+
+        <EditText
+            android:id="@+id/etAnswer2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Odpowiedź B"
+            android:textColorHint="#888888"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#6200EE" />
+
+        <EditText
+            android:id="@+id/etAnswer3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Odpowiedź C"
+            android:textColorHint="#888888"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#6200EE" />
+
+        <EditText
+            android:id="@+id/etAnswer4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Odpowiedź D"
+            android:textColorHint="#888888"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#6200EE"
+            android:layout_marginBottom="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Która odpowiedź jest poprawna?"
+            android:textColor="#AAAAAA" />
+
+        <Spinner
+            android:id="@+id/spinnerCorrectAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnSubmitQuestion"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:text="Dodaj Pytanie do Bazy"
+            android:backgroundTint="#03DAC5"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnBackToMenu"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="Powrót"
+            android:backgroundTint="#444444"
+            android:textColor="#FFFFFF"
+            android:layout_marginTop="8dp" />
+
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="8dp">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAnswer3"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            app:cornerRadius="12dp"
-            app:backgroundTint="#333333"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:text="C" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnAnswer4"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            app:cornerRadius="12dp"
-            app:backgroundTint="#333333"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:text="D" />
-    </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

@@ -30,7 +30,12 @@
 
         <activity android:name=".MenuActivity" />
 
-        <activity android:name=".CreateQuizActivity" />
+        <activity android:name=".PlayQuizActivity" />
 
+        <activity android:name=".ChooseQuizActivity" />
+
+        <activity android:name=".AddQuizActivity" />
+
+        <activity android:name=".CreateQuizActivity"/>
     </application>
 </manifest>

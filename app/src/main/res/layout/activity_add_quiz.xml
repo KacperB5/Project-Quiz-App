@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="#1E1E1E">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nazwa nowego quizu:"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:layout_marginBottom="10dp" />
+
+    <EditText
+        android:id="@+id/etQuizTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="np. Historia, Filmy..."
+        android:textColor="#FFFFFF"
+        android:textColorHint="#888888"
+        android:backgroundTint="#03DAC5" />
+
+    <Button
+        android:id="@+id/btnCreateQuiz"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Stwórz Kategorię"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#6200EE" />
+
+</LinearLayout>

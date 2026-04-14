@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,27 +14,43 @@
         android:src="@drawable/logo" />
 
     <TextView
+        android:id="@+id/tvWelcomeUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:text="Welcome!"
+        android:layout_marginBottom="32dp"
+        android:text="Witaj, Użytkowniku!"
+        android:textAlignment="center"
         android:textColor="#FFFFFF"
-        android:textSize="36sp" />
+        android:textSize="28sp"
+        android:textStyle="bold" />
 
     <Button
-        android:id="@+id/btnStartQuiz"
+        android:id="@+id/btnSingleplayer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="#6200EE"
-        android:text="Start Quiz"
-        android:textColor="#FFFFFF" />
+        android:text="Singleplayer"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnMultiplayer"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#CCCCCC"
+        android:text="Multiplayer"
+        android:textColor="#000000"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:backgroundTint="#03DAC5"
-        android:text="Logout"
-        android:textColor="#000000" />
+        android:text="Wyloguj się"
+        android:textColor="#000000"
+        android:textSize="18sp" />
+
 </LinearLayout>

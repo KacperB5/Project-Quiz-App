@@ -71,6 +71,10 @@ class MainActivity : AppCompatActivity() {
 
                             if (status == "success") {
                                 Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
+
+                                val sharedPref = getSharedPreferences("QuizAppPrefs", MODE_PRIVATE)
+                                sharedPref.edit().putString("USERNAME", user).apply()
+
                                 val intent = Intent(this@MainActivity, WelcomeActivity::class.java)
                                 startActivity(intent)
                                 finish()
