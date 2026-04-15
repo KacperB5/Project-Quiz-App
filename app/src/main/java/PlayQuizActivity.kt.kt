@@ -3,6 +3,7 @@ package com.example.mobilequizapp
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.os.Handler
 import android.os.Looper
 import android.widget.*
@@ -21,6 +22,10 @@ class PlayQuizActivity : AppCompatActivity() {
     private var score = 0
 
     private var startTimeInMillis: Long = 0
+    private var questionStartTime: Long = 0
+    private val questionTimes = mutableListOf<Long>()
+
+    private var countDownTimer: CountDownTimer? = null
 
     private lateinit var tvQuestion: TextView
     private lateinit var btnA: Button
@@ -65,7 +70,6 @@ class PlayQuizActivity : AppCompatActivity() {
                         ))
                     }
                     if (questions.isNotEmpty()) {
-
                         questions.shuffle()
                         if (questions.size > 10) {
                             val subList = questions.take(10)
@@ -73,15 +77,12 @@ class PlayQuizActivity : AppCompatActivity() {
                             questions.addAll(subList)
                         }
 
-                        progressBar.max = questions.size
                         displayQuestion()
                     } else {
                         Toast.makeText(this, "Ten quiz nie ma jeszcze pytań!", Toast.LENGTH_LONG).show()
                         finish()
                     }
-                } catch (e: JSONException) {
-                    e.printStackTrace()
-                }
+                } catch (e: JSONException) { e.printStackTrace() }
             },
             { Toast.makeText(this, "Błąd pobierania pytań", Toast.LENGTH_SHORT).show() }
         )
@@ -89,7 +90,7 @@ class PlayQuizActivity : AppCompatActivity() {
     }
 
     private fun displayQuestion() {
-        progressBar.progress = currentQuestionIndex + 1
+        questionStartTime = System.currentTimeMillis()
 
         val q = questions[currentQuestionIndex]
         tvQuestion.text = q.text
@@ -104,12 +105,32 @@ class PlayQuizActivity : AppCompatActivity() {
         buttons.forEachIndexed { index, button ->
             button.isEnabled = true
             button.backgroundTintList = defaultColor
-
             button.setOnClickListener { checkAnswer(index, button) }
         }
+
+        countDownTimer?.cancel()
+
+        progressBar.max = 10000
+        progressBar.progress = 10000
+
+        countDownTimer = object : CountDownTimer(10000, 20) {
+            override fun onTick(millisUntilFinished: Long) {
+                progressBar.progress = millisUntilFinished.toInt()
+            }
+
+            override fun onFinish() {
+                progressBar.progress = 0
+                handleTimeOut()
+            }
+        }.start()
     }
 
     private fun checkAnswer(selectedIndex: Int, clickedButton: Button) {
+        countDownTimer?.cancel()
+
+        val timeSpentOnThisQuestion = System.currentTimeMillis() - questionStartTime
+        questionTimes.add(timeSpentOnThisQuestion)
+
         val correctIndex = questions[currentQuestionIndex].correctIndex
         val buttons = listOf(btnA, btnB, btnC, btnD)
 
@@ -133,31 +154,52 @@ class PlayQuizActivity : AppCompatActivity() {
         }, 1500)
     }
 
+    private fun handleTimeOut() {
+        questionTimes.add(10000L)
+
+        val correctIndex = questions[currentQuestionIndex].correctIndex
+        val buttons = listOf(btnA, btnB, btnC, btnD)
+
+        buttons.forEach { it.isEnabled = false }
+
+        buttons[correctIndex].backgroundTintList = ColorStateList.valueOf(Color.parseColor("#4CAF50"))
+
+        Toast.makeText(this, "Czas minął!", Toast.LENGTH_SHORT).show()
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            currentQuestionIndex++
+            if (currentQuestionIndex < questions.size) {
+                displayQuestion()
+            } else {
+                showFinalScore()
+            }
+        }, 1500)
+    }
+
     private fun showFinalScore() {
+        countDownTimer?.cancel()
+
+        val totalTimeMillis = System.currentTimeMillis() - startTimeInMillis
+        val totalSeconds = (totalTimeMillis / 1000).toInt()
+        val totalFormatted = String.format("%02d:%02d", totalSeconds / 60, totalSeconds % 60)
+
+        val avgTimeSeconds = if (questionTimes.isNotEmpty()) (questionTimes.average() / 1000).toInt() else 0
+
         setContentView(R.layout.activity_score)
-
-        val endTimeInMillis = System.currentTimeMillis()
-        val totalTimeSeconds = ((endTimeInMillis - startTimeInMillis) / 1000).toInt()
-        val minutes = totalTimeSeconds / 60
-        val seconds = totalTimeSeconds % 60
-        val timeFormatted = String.format("%02d:%02d", minutes, seconds)
-
-        val percentage = if (questions.isNotEmpty()) (score * 100) / questions.size else 0
 
         val tvScore = findViewById<TextView>(R.id.tvScore)
         val tvPercentage = findViewById<TextView>(R.id.tvPercentage)
         val tvTime = findViewById<TextView>(R.id.tvTime)
 
         tvScore.text = "$score / ${questions.size}"
+        val percentage = (score * 100) / questions.size
         tvPercentage.text = "$percentage%"
-        tvTime.text = "Czas gry: $timeFormatted"
+
+        tvTime.text = "Całkowity czas: $totalFormatted\nŚr. czas/pytanie: ${avgTimeSeconds}s"
 
         saveResultToDatabase(score, questions.size)
 
-        val btnReturnMenu = findViewById<Button>(R.id.btnReturnMenu)
-        btnReturnMenu.setOnClickListener {
-            finish()
-        }
+        findViewById<Button>(R.id.btnReturnMenu).setOnClickListener { finish() }
     }
 
     private fun saveResultToDatabase(finalScore: Int, maxScore: Int) {
@@ -165,11 +207,7 @@ class PlayQuizActivity : AppCompatActivity() {
         val username = sharedPref.getString("USERNAME", "Anonim") ?: "Anonim"
         val url = "https://quiz-app.alwaysdata.net/api/save_result.php"
 
-        val stringRequest = object : StringRequest(
-            Request.Method.POST, url,
-            { },
-            { Toast.makeText(this, "Nie udało się zapisać wyniku.", Toast.LENGTH_SHORT).show() }
-        ) {
+        val stringRequest = object : StringRequest(Method.POST, url, {}, {}) {
             override fun getParams(): MutableMap<String, String> {
                 val params = HashMap<String, String>()
                 params["username"] = username
@@ -181,13 +219,13 @@ class PlayQuizActivity : AppCompatActivity() {
         }
         Volley.newRequestQueue(this).add(stringRequest)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        countDownTimer?.cancel()
+    }
 }
 
 data class Question(
-    val text: String,
-    val a1: String,
-    val a2: String,
-    val a3: String,
-    val a4: String,
-    val correctIndex: Int
+    val text: String, val a1: String, val a2: String, val a3: String, val a4: String, val correctIndex: Int
 )
