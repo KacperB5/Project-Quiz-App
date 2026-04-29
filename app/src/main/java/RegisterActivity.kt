@@ -1,6 +1,7 @@
 package com.example.mobilequizapp
 
 import android.os.Bundle
+import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -19,17 +20,23 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
 
         val etRegUsername = findViewById<EditText>(R.id.etRegUsername)
+        val etRegEmail = findViewById<EditText>(R.id.etRegEmail)
         val etRegPassword = findViewById<EditText>(R.id.etRegPassword)
         val btnRegisterSubmit = findViewById<Button>(R.id.btnRegisterSubmit)
 
         val btnBack = findViewById<Button>(R.id.btnBack)
 
         btnRegisterSubmit.setOnClickListener {
-            val username = etRegUsername.text.toString()
-            val password = etRegPassword.text.toString()
+            val username = etRegUsername.text.toString().trim()
+            val email = etRegEmail.text.toString().trim()
+            val password = etRegPassword.text.toString().trim()
 
-            if (username.isNotEmpty() && password.isNotEmpty()) {
-                registerUser(username, password)
+            if (username.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()) {
+                if (Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    registerUser(username, email, password)
+                } else {
+                    Toast.makeText(this, "Wprowadź poprawny adres e-mail", Toast.LENGTH_SHORT).show()
+                }
             } else {
                 Toast.makeText(this, "Wypełnij wszystkie pola", Toast.LENGTH_SHORT).show()
             }
@@ -40,9 +47,10 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun registerUser(user: String, pass: String) {
+    private fun registerUser(user: String, email: String, pass: String) {
         val formBody = FormBody.Builder()
             .add("username", user)
+            .add("email", email) // Dodajemy e-mail do zapytania POST
             .add("password", pass)
             .build()
 
@@ -71,7 +79,7 @@ class RegisterActivity : AppCompatActivity() {
                         }
                     } catch (e: Exception) {
                         runOnUiThread {
-                            Toast.makeText(this@RegisterActivity, "Błąd serwera", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@RegisterActivity, "Błąd serwera: brak poprawnej odpowiedzi JSON", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
