@@ -3,6 +3,8 @@
     android:id="@android:id/text1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:textSize="18sp"
+    android:padding="16dp"
     android:textColor="#FFFFFF"
-    android:padding="10dp" />
+    android:textSize="16sp"
+    android:ellipsize="marquee"
+    android:singleLine="true" />

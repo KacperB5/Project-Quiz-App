@@ -2,80 +2,87 @@ package com.example.mobilequizapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonArrayRequest
+import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import org.json.JSONException
+import org.json.JSONObject
 
 class ChooseQuizActivity : AppCompatActivity() {
 
     private lateinit var container: LinearLayout
+    private var isMultiplayer: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_choose_quiz)
 
         container = findViewById(R.id.quizListContainer)
+        isMultiplayer = intent.getBooleanExtra("IS_MULTIPLAYER", false)
 
-        val btnBackToMenu = findViewById<Button>(R.id.btnBackToMenu)
-        btnBackToMenu.setOnClickListener {
-            finish()
-        }
+        findViewById<Button>(R.id.btnBackToMenu).setOnClickListener { finish() }
 
         loadQuizzes()
     }
 
     private fun loadQuizzes() {
         val url = "https://quiz-app.alwaysdata.net/api/get_quiz_list.php"
-
         val request = JsonArrayRequest(Request.Method.GET, url, null,
             { response ->
                 container.removeAllViews()
-                try {
-                    for (i in 0 until response.length()) {
-                        val quiz = response.getJSONObject(i)
-                        val id = quiz.getInt("id")
-                        val title = quiz.getString("title")
-                        val author = quiz.getString("author")
-                        val count = quiz.getInt("question_count")
-
-                        addQuizCard(id, title, author, count)
-                    }
-                } catch (e: JSONException) {
-                    e.printStackTrace()
+                for (i in 0 until response.length()) {
+                    val obj = response.getJSONObject(i)
+                    addCard(obj.getInt("id"), obj.getString("title"), obj.getString("author"), obj.getInt("question_count"))
                 }
             },
-            { error ->
-                Toast.makeText(this, "Błąd pobierania quizów", Toast.LENGTH_SHORT).show()
-            }
+            { Toast.makeText(this, "Błąd pobierania", Toast.LENGTH_SHORT).show() }
         )
-
-        request.setShouldCache(false)
         Volley.newRequestQueue(this).add(request)
     }
 
-    private fun addQuizCard(id: Int, title: String, author: String, count: Int) {
+    private fun addCard(id: Int, title: String, author: String, count: Int) {
         val view = layoutInflater.inflate(R.layout.item_quiz_card, container, false)
-
-        val tvTitle = view.findViewById<TextView>(R.id.tvQuizTitle)
-        val tvAuthor = view.findViewById<TextView>(R.id.tvQuizAuthor)
-        val tvCount = view.findViewById<TextView>(R.id.tvQuizCount)
-
-        tvTitle.text = title
-        tvAuthor.text = "Twórca: $author"
-        tvCount.text = "Il. pytań: $count"
+        view.findViewById<TextView>(R.id.tvQuizTitle).text = title
+        view.findViewById<TextView>(R.id.tvQuizAuthor).text = "Twórca: $author"
+        view.findViewById<TextView>(R.id.tvQuizCount).text = "Il. pytań: $count"
 
         view.setOnClickListener {
-            val intent = Intent(this, PlayQuizActivity::class.java)
-            intent.putExtra("QUIZ_ID", id)
-            startActivity(intent)
+            if (isMultiplayer) {
+                createRoom(id)
+            } else {
+                val intent = Intent(this, PlayQuizActivity::class.java)
+                intent.putExtra("QUIZ_ID", id)
+                startActivity(intent)
+            }
         }
-
         container.addView(view)
+    }
+
+    private fun createRoom(quizId: Int) {
+        val url = "https://quiz-app.alwaysdata.net/api/create_room.php"
+        val sharedPref = getSharedPreferences("QuizAppPrefs", MODE_PRIVATE)
+        val username = sharedPref.getString("USERNAME", "Host") ?: "Host"
+
+        val request = object : StringRequest(Method.POST, url,
+            { response ->
+                val json = JSONObject(response)
+                if (json.getBoolean("success")) {
+                    val pin = json.getString("pin")
+                    val intent = Intent(this, LobbyActivity::class.java)
+                    intent.putExtra("ROOM_PIN", pin)
+                    intent.putExtra("QUIZ_ID", quizId)
+                    startActivity(intent)
+                    finish()
+                }
+            },
+            { Toast.makeText(this, "Błąd tworzenia pokoju", Toast.LENGTH_SHORT).show() }
+        ) {
+            override fun getParams(): MutableMap<String, String> {
+                return hashMapOf("username" to username, "quiz_id" to quizId.toString())
+            }
+        }
+        Volley.newRequestQueue(this).add(request)
     }
 }

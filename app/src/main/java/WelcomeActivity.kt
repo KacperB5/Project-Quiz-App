@@ -19,7 +19,7 @@ class WelcomeActivity : AppCompatActivity() {
         tvWelcomeUser.text = "Witaj, $username!"
 
         val btnSingleplayer = findViewById<Button>(R.id.btnSingleplayer)
-        val btnMultiplayer = findViewById<Button>(R.id.btnMultiplayer)
+        val btnMultiPlayer = findViewById<Button>(R.id.btnMultiPlayer)
         val btnLogout = findViewById<Button>(R.id.btnLogout)
 
         btnSingleplayer.setOnClickListener {
@@ -27,8 +27,8 @@ class WelcomeActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        btnMultiplayer.setOnClickListener {
-            android.widget.Toast.makeText(this, "Tryb Multiplayer dostępny wkrótce!", android.widget.Toast.LENGTH_SHORT).show()
+        btnMultiPlayer.setOnClickListener {
+            startActivity(Intent(this, MultiplayerActivity::class.java))
         }
 
         btnLogout.setOnClickListener {

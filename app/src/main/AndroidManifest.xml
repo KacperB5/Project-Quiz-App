@@ -37,5 +37,13 @@
         <activity android:name=".AddQuizActivity" />
 
         <activity android:name=".CreateQuizActivity"/>
+
+        <activity android:name=".RankingActivity"/>
+
+        <activity android:name=".MultiplayerActivity"/>
+
+        <activity android:name=".LobbyActivity" />
+
+        <activity android:name=".MultiplayerScoreActivity" />
     </application>
 </manifest>

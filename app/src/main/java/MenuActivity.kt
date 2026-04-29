@@ -13,6 +13,7 @@ class MenuActivity : AppCompatActivity() {
 
         val btnWybierz = findViewById<Button>(R.id.btnWybierzQuiz)
         val btnStworz = findViewById<Button>(R.id.btnStworzQuiz)
+        val btnRanking = findViewById<Button>(R.id.btnRanking)
         val btnBack = findViewById<Button>(R.id.btnBackToWelcome)
 
         btnWybierz.setOnClickListener {
@@ -21,6 +22,10 @@ class MenuActivity : AppCompatActivity() {
 
         btnStworz.setOnClickListener {
             startActivity(Intent(this, CreateQuizActivity::class.java))
+        }
+
+        btnRanking.setOnClickListener {
+            startActivity(Intent(this, RankingActivity::class.java))
         }
 
         btnBack.setOnClickListener { finish() }
