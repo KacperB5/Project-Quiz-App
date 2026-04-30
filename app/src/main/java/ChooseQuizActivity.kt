@@ -14,6 +14,8 @@ class ChooseQuizActivity : AppCompatActivity() {
 
     private lateinit var container: LinearLayout
     private var isMultiplayer: Boolean = false
+    private var maxPlayers: Int = 2
+    private var existingRoomPin: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +23,8 @@ class ChooseQuizActivity : AppCompatActivity() {
 
         container = findViewById(R.id.quizListContainer)
         isMultiplayer = intent.getBooleanExtra("IS_MULTIPLAYER", false)
+        maxPlayers = intent.getIntExtra("MAX_PLAYERS", 2)
+        existingRoomPin = intent.getStringExtra("ROOM_PIN")
 
         findViewById<Button>(R.id.btnBackToMenu).setOnClickListener { finish() }
 
@@ -50,7 +54,11 @@ class ChooseQuizActivity : AppCompatActivity() {
 
         view.setOnClickListener {
             if (isMultiplayer) {
-                createRoom(id)
+                if (existingRoomPin != null) {
+                    startNextRound(id, existingRoomPin!!)
+                } else {
+                    createRoom(id)
+                }
             } else {
                 val intent = Intent(this, PlayQuizActivity::class.java)
                 intent.putExtra("QUIZ_ID", id)
@@ -80,7 +88,33 @@ class ChooseQuizActivity : AppCompatActivity() {
             { Toast.makeText(this, "Błąd tworzenia pokoju", Toast.LENGTH_SHORT).show() }
         ) {
             override fun getParams(): MutableMap<String, String> {
-                return hashMapOf("username" to username, "quiz_id" to quizId.toString())
+                return hashMapOf(
+                    "username" to username,
+                    "quiz_id" to quizId.toString(),
+                    "max_players" to maxPlayers.toString()
+                )
+            }
+        }
+        Volley.newRequestQueue(this).add(request)
+    }
+
+    private fun startNextRound(quizId: Int, pin: String) {
+        val url = "https://quiz-app.alwaysdata.net/api/next_round.php"
+        val request = object : StringRequest(Method.POST, url,
+            { response ->
+                val json = JSONObject(response)
+                if (json.getBoolean("success")) {
+                    val intent = Intent(this, PlayQuizActivity::class.java)
+                    intent.putExtra("QUIZ_ID", quizId)
+                    intent.putExtra("ROOM_PIN", pin)
+                    startActivity(intent)
+                    finish()
+                }
+            },
+            { Toast.makeText(this, "Błąd przy zmianie quizu", Toast.LENGTH_SHORT).show() }
+        ) {
+            override fun getParams(): MutableMap<String, String> {
+                return hashMapOf("pin" to pin, "quiz_id" to quizId.toString())
             }
         }
         Volley.newRequestQueue(this).add(request)

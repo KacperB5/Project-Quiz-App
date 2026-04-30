@@ -18,18 +18,16 @@ class MultiplayerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_multiplayer)
 
-        val btnCreateRoom = findViewById<Button>(R.id.btnCreateRoom)
+        val btnCreateRoom2 = findViewById<Button>(R.id.btnCreateRoom2)
+        val btnCreateRoom3 = findViewById<Button>(R.id.btnCreateRoom3)
         val btnJoinRoom = findViewById<Button>(R.id.btnJoinRoom)
         val etRoomPin = findViewById<EditText>(R.id.etRoomPin)
         val btnBack = findViewById<Button>(R.id.btnBackToMenu)
 
         btnBack.setOnClickListener { finish() }
 
-        btnCreateRoom.setOnClickListener {
-            val intent = Intent(this, ChooseQuizActivity::class.java)
-            intent.putExtra("IS_MULTIPLAYER", true)
-            startActivity(intent)
-        }
+        btnCreateRoom2.setOnClickListener { openChooseQuiz(2) }
+        btnCreateRoom3.setOnClickListener { openChooseQuiz(3) }
 
         btnJoinRoom.setOnClickListener {
             val pin = etRoomPin.text.toString().trim()
@@ -39,6 +37,13 @@ class MultiplayerActivity : AppCompatActivity() {
                 Toast.makeText(this, "PIN musi mieć dokładnie 4 cyfry!", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun openChooseQuiz(maxPlayers: Int) {
+        val intent = Intent(this, ChooseQuizActivity::class.java)
+        intent.putExtra("IS_MULTIPLAYER", true)
+        intent.putExtra("MAX_PLAYERS", maxPlayers)
+        startActivity(intent)
     }
 
     private fun joinRoom(pin: String) {
@@ -55,10 +60,11 @@ class MultiplayerActivity : AppCompatActivity() {
 
                     if (success) {
                         val quizId = jsonResponse.getInt("quiz_id")
-                        Toast.makeText(this, "Dołączono! Odpalam quiz...", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(this, PlayQuizActivity::class.java)
-                        intent.putExtra("QUIZ_ID", quizId)
+                        Toast.makeText(this, "Dołączono! Czekaj na start...", Toast.LENGTH_SHORT).show()
+
+                        val intent = Intent(this, LobbyActivity::class.java)
                         intent.putExtra("ROOM_PIN", pin)
+                        intent.putExtra("QUIZ_ID", quizId)
                         startActivity(intent)
                     } else {
                         val errorMsg = jsonResponse.getString("error")

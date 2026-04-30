@@ -278,23 +278,28 @@ class PlayQuizActivity : AppCompatActivity() {
                 try {
                     val json = JSONObject(response)
                     if (json.getBoolean("success")) {
-                        val hostQ = json.getInt("host_q")
-                        val guestQ = json.getInt("guest_q")
+                        val allReady = json.optBoolean("all_ready", false)
 
-                        if ((hostQ >= currentQuestionIndex && guestQ >= currentQuestionIndex) || waitingForOpponentSeconds >= 15) {
-
+                        if (allReady || waitingForOpponentSeconds >= 15) {
                             syncRunnable?.let { syncHandler.removeCallbacks(it) }
 
-                            val opponentAnswer = json.optInt("opponent_answer", 99)
+                            val oppAnswers = json.optJSONArray("opponent_answers")
                             val correctIndex = questions[currentQuestionIndex].correctIndex
                             val buttons = listOf(btnA, btnB, btnC, btnD)
 
-                            if (opponentAnswer in buttons.indices) {
-                                val oppBtn = buttons[opponentAnswer]
-                                oppBtn.text = oppBtn.text.toString() + " \uD83D\uDC64"
-
-                                if (opponentAnswer != correctIndex) {
-                                    oppBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F44336"))
+                            if (oppAnswers != null) {
+                                for (i in 0 until oppAnswers.length()) {
+                                    val oppAnswer = oppAnswers.getInt(i)
+                                    if (oppAnswer in buttons.indices) {
+                                        val oppBtn = buttons[oppAnswer]
+                                        // Dodaj ikonkę, jeśli jeszcze jej nie ma
+                                        if (!oppBtn.text.toString().contains("\uD83D\uDC64")) {
+                                            oppBtn.text = oppBtn.text.toString() + " \uD83D\uDC64"
+                                        }
+                                        if (oppAnswer != correctIndex) {
+                                            oppBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F44336"))
+                                        }
+                                    }
                                 }
                             }
 
