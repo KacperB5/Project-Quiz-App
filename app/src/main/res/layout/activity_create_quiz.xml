@@ -45,15 +45,21 @@
             app:cardCornerRadius="16dp"
             app:strokeColor="#6200EE"
             app:strokeWidth="1dp"
+            android:clickable="false"
+            android:focusable="false"
             app:layout_constraintTop_toBottomOf="@+id/tvCategoryLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
+            <!-- Zmieniono na tryb "dialog" (okienko nakładające się na ekran z przyciemnionym tłem) -->
             <Spinner
                 android:id="@+id/spinnerCategory"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:backgroundTint="#FFFFFF" />
+                android:backgroundTint="#FFFFFF"
+                android:spinnerMode="dialog"
+                android:clickable="true"
+                android:focusable="true" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
@@ -102,6 +108,28 @@
                         android:id="@+id/etNewQuestion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:textColor="#FFFFFF" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- POLE NA LINK ZDJĘCIA/WIDEO -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilMediaUrl"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Link do zdjęcia lub wideo (Opcjonalne)"
+                    android:textColorHint="#AAAAAA"
+                    app:boxStrokeColor="#03DAC5"
+                    app:boxBackgroundColor="#1E1E1E"
+                    app:boxCornerRadiusTopStart="12dp"
+                    app:boxCornerRadiusBottomEnd="12dp"
+                    android:layout_marginBottom="16dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etMediaUrl"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textUri"
                         android:textColor="#FFFFFF" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -195,15 +223,21 @@
             app:cardCornerRadius="16dp"
             app:strokeColor="#03DAC5"
             app:strokeWidth="1dp"
+            android:clickable="false"
+            android:focusable="false"
             app:layout_constraintTop_toBottomOf="@+id/tvCorrectAnswerLabel"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
+            <!-- Zmieniono na tryb "dialog" (okienko nakładające się na ekran z przyciemnionym tłem) -->
             <Spinner
                 android:id="@+id/spinnerCorrectAnswer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:backgroundTint="#FFFFFF" />
+                android:backgroundTint="#FFFFFF"
+                android:spinnerMode="dialog"
+                android:clickable="true"
+                android:focusable="true" />
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.button.MaterialButton
@@ -239,4 +273,5 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </ScrollView>

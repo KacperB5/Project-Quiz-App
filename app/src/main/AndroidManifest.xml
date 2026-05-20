@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,37 +12,62 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MobileQuizApp">
+        android:theme="@style/Theme.MobileQuizApp"
+        android:usesCleartextTraffic="true">
 
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".RegisterActivity" />
+        <activity
+            android:name=".RegisterActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".WelcomeActivity" />
+        <activity
+            android:name=".WelcomeActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".MenuActivity" />
+        <activity
+            android:name=".MenuActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".PlayQuizActivity" />
+        <activity
+            android:name=".PlayQuizActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".ChooseQuizActivity" />
+        <activity
+            android:name=".ChooseQuizActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".AddQuizActivity" />
+        <activity
+            android:name=".AddQuizActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".CreateQuizActivity"/>
+        <activity
+            android:name=".CreateQuizActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".RankingActivity"/>
+        <activity
+            android:name=".RankingActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".MultiplayerActivity"/>
+        <activity
+            android:name=".MultiplayerActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".LobbyActivity" />
+        <activity
+            android:name=".LobbyActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".MultiplayerScoreActivity" />
+        <activity
+            android:name=".MultiplayerScoreActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 </manifest>

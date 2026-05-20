@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import org.json.JSONObject
 
 class AddQuizActivity : AppCompatActivity() {
 
@@ -21,25 +22,42 @@ class AddQuizActivity : AppCompatActivity() {
         btnCreateQuiz.setOnClickListener {
             val title = etQuizTitle.text.toString().trim()
             if (title.isNotEmpty()) {
-                createNewCategory(title)
+                btnCreateQuiz.isEnabled = false // Blokujemy przycisk na czas ładowania
+                createNewCategory(title, btnCreateQuiz)
             } else {
                 Toast.makeText(this, "Wpisz nazwę!", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun createNewCategory(title: String) {
+    private fun createNewCategory(title: String, button: Button) {
         val url = "https://quiz-app.alwaysdata.net/api/add_quiz_category.php"
 
         val sharedPref = getSharedPreferences("QuizAppPrefs", MODE_PRIVATE)
         val username = sharedPref.getString("USERNAME", "Nieznany") ?: "Nieznany"
 
         val request = object : StringRequest(Method.POST, url,
-            {
-                Toast.makeText(this, "Stworzono quiz: $title", Toast.LENGTH_SHORT).show()
-                finish()
+            { response ->
+                button.isEnabled = true
+                try {
+                    val jsonObject = JSONObject(response)
+                    val status = jsonObject.optString("status")
+                    if (status == "success") {
+                        Toast.makeText(this, "Stworzono quiz: $title", Toast.LENGTH_SHORT).show()
+                        finish()
+                    } else {
+                        val message = jsonObject.optString("message", "Błąd zapisu")
+                        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    Toast.makeText(this, "Błąd przetwarzania danych", Toast.LENGTH_SHORT).show()
+                }
             },
-            { Toast.makeText(this, "Błąd serwera", Toast.LENGTH_SHORT).show() }
+            {
+                button.isEnabled = true
+                Toast.makeText(this, "Błąd serwera", Toast.LENGTH_SHORT).show()
+            }
         ) {
             override fun getParams(): MutableMap<String, String> {
                 val params = HashMap<String, String>()

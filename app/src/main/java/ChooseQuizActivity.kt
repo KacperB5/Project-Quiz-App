@@ -43,6 +43,8 @@ class ChooseQuizActivity : AppCompatActivity() {
             },
             { Toast.makeText(this, "Błąd pobierania", Toast.LENGTH_SHORT).show() }
         )
+        // WYŁĄCZENIE CACHE - gwarantuje pobranie świeżej listy z serwera
+        request.setShouldCache(false)
         Volley.newRequestQueue(this).add(request)
     }
 
