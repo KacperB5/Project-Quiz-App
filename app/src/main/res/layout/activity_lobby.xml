@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Twój kod do pokoju:"
+                android:text="@string/lobby_pin_header"
                 android:textColor="#AAAAAA"
                 android:textSize="20sp"
                 android:layout_marginBottom="16dp" />
@@ -67,7 +67,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="6dp"
-        android:text="Czekam, aż znajomy wpisze kod...\nGra uruchomi się automatycznie."
+        android:text="@string/lobby_waiting_msg"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="18sp"
@@ -81,7 +81,7 @@
         android:layout_width="0dp"
         android:layout_height="65dp"
         android:layout_marginBottom="16dp"
-        android:text="Anuluj i wróć"
+        android:text="@string/btn_cancel_and_back"
         android:textColor="#F44336"
         android:textSize="16sp"
         android:textStyle="bold"

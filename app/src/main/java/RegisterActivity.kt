@@ -50,7 +50,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun registerUser(user: String, email: String, pass: String) {
         val formBody = FormBody.Builder()
             .add("username", user)
-            .add("email", email) // Dodajemy e-mail do zapytania POST
+            .add("email", email)
             .add("password", pass)
             .build()
 

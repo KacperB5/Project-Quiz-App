@@ -16,7 +16,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Kreator Pytań"
+            android:text="@string/create_questions_header"
             android:textAlignment="center"
             android:textColor="#FFFFFF"
             android:textSize="28sp"
@@ -25,15 +25,86 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardModeratorPanel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="#1A237E"
+            app:cardCornerRadius="20dp"
+            app:strokeColor="#03DAC5"
+            app:strokeWidth="1.5dp"
+            app:layout_constraintTop_toBottomOf="@+id/tvHeaderTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Panel Moderacji Admina 🛡️"
+                    android:textColor="#03DAC5"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tvModQuestionContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Brak oczekujących pytań w kolejce."
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnReject"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:backgroundTint="#D32F2F"
+                        android:text="Odrzuć"
+                        android:textColor="#FFFFFF"
+                        app:cornerRadius="12dp"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnApprove"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:backgroundTint="#388E3C"
+                        android:text="Zatwierdź"
+                        android:textColor="#FFFFFF"
+                        app:cornerRadius="12dp"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <TextView
             android:id="@+id/tvCategoryLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Wybierz kategorię:"
+            android:text="@string/select_category_label"
             android:textColor="#AAAAAA"
             android:textSize="14sp"
-            app:layout_constraintTop_toBottomOf="@+id/tvHeaderTitle"
+            app:layout_constraintTop_toBottomOf="@+id/cardModeratorPanel"
             app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.card.MaterialCardView
@@ -51,7 +122,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <!-- Zmieniono na tryb "dialog" (okienko nakładające się na ekran z przyciemnionym tłem) -->
             <Spinner
                 android:id="@+id/spinnerCategory"
                 android:layout_width="match_parent"
@@ -67,7 +137,7 @@
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="+ Utwórz zupełnie nowy quiz"
+            android:text="@string/btn_add_new_category"
             android:textColor="#03DAC5"
             android:textSize="14sp"
             app:layout_constraintTop_toBottomOf="@+id/cardCategory"
@@ -96,7 +166,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Wpisz treść pytania..."
+                    android:hint="@string/hint_enter_question"
                     android:textColorHint="#AAAAAA"
                     app:boxStrokeColor="#03DAC5"
                     app:boxBackgroundColor="#1E1E1E"
@@ -111,13 +181,12 @@
                         android:textColor="#FFFFFF" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <!-- POLE NA LINK ZDJĘCIA/WIDEO -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/tilMediaUrl"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Link do zdjęcia lub wideo (Opcjonalne)"
+                    android:hint="@string/hint_media_url"
                     android:textColorHint="#AAAAAA"
                     app:boxStrokeColor="#03DAC5"
                     app:boxBackgroundColor="#1E1E1E"
@@ -137,7 +206,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Odpowiedź A"
+                    android:hint="@string/hint_answer_a"
                     android:textColorHint="#888888"
                     app:boxStrokeColor="#6200EE"
                     app:boxBackgroundColor="#1E1E1E"
@@ -154,7 +223,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Odpowiedź B"
+                    android:hint="@string/hint_answer_b"
                     android:textColorHint="#888888"
                     app:boxStrokeColor="#6200EE"
                     app:boxBackgroundColor="#1E1E1E"
@@ -171,7 +240,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Odpowiedź C"
+                    android:hint="@string/hint_answer_c"
                     android:textColorHint="#888888"
                     app:boxStrokeColor="#6200EE"
                     app:boxBackgroundColor="#1E1E1E"
@@ -188,7 +257,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Odpowiedź D"
+                    android:hint="@string/hint_answer_d"
                     android:textColorHint="#888888"
                     app:boxStrokeColor="#6200EE"
                     app:boxBackgroundColor="#1E1E1E">
@@ -208,7 +277,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:text="Która odpowiedź jest poprawna?"
+            android:text="@string/correct_answer_label"
             android:textColor="#AAAAAA"
             android:textSize="14sp"
             app:layout_constraintTop_toBottomOf="@+id/cardQuestionDetails"
@@ -229,7 +298,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <!-- Zmieniono na tryb "dialog" (okienko nakładające się na ekran z przyciemnionym tłem) -->
             <Spinner
                 android:id="@+id/spinnerCorrectAnswer"
                 android:layout_width="match_parent"
@@ -245,7 +313,7 @@
             android:layout_width="0dp"
             android:layout_height="65dp"
             android:layout_marginTop="40dp"
-            android:text="Dodaj Pytanie do Bazy"
+            android:text="@string/btn_submit_question_db"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="#000000"
@@ -262,7 +330,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="40dp"
-            android:text="Powrót"
+            android:text="@string/btn_back"
             android:textSize="16sp"
             android:textColor="#FFFFFF"
             android:backgroundTint="#2C2C2C"

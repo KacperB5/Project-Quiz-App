@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:text="Kreator Quizu"
+        android:text="@string/add_quiz_header"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
         android:textSize="28sp"
@@ -42,7 +42,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nazwa nowej kategorii:"
+                android:text="@string/add_quiz_category_label"
                 android:textColor="#03DAC5"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -53,7 +53,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="np. Historia, Filmy..."
+                android:hint="@string/hint_quiz_category"
                 android:textColorHint="#AAAAAA"
                 app:boxStrokeColor="#6200EE"
                 app:boxCornerRadiusTopStart="16dp"
@@ -75,7 +75,7 @@
         android:layout_width="0dp"
         android:layout_height="65dp"
         android:layout_marginTop="40dp"
-        android:text="Stwórz i dodaj pytania"
+        android:text="@string/btn_create_quiz_and_add"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
@@ -85,7 +85,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardQuizDetails"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-    <!-- To jest komentarz w XML -->
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0dp"

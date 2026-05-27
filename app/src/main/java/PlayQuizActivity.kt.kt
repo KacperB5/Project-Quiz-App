@@ -100,7 +100,8 @@ class PlayQuizActivity : AppCompatActivity() {
     private fun loadQuestions() {
         val url = "https://quiz-app.alwaysdata.net/api/quizzes.php?quiz_id=$quizId"
 
-        val request = JsonArrayRequest(Request.Method.GET, url, null,
+        val request = JsonArrayRequest(
+            Request.Method.GET, url, null,
             { response ->
                 try {
                     for (i in 0 until response.length()) {
@@ -109,15 +110,17 @@ class PlayQuizActivity : AppCompatActivity() {
                         val imgRaw = obj.optString("image_url", "")
                         val imgUrl = if (imgRaw.isNotEmpty() && imgRaw != "null") imgRaw else null
 
-                        questions.add(Question(
-                            obj.optString("question", ""),
-                            imgUrl,
-                            obj.optString("answer1", ""),
-                            obj.optString("answer2", ""),
-                            obj.optString("answer3", ""),
-                            obj.optString("answer4", ""),
-                            obj.optInt("correct", 1) - 1
-                        ))
+                        questions.add(
+                            Question(
+                                obj.optString("question", ""),
+                                imgUrl,
+                                obj.optString("answer1", ""),
+                                obj.optString("answer2", ""),
+                                obj.optString("answer3", ""),
+                                obj.optString("answer4", ""),
+                                obj.optInt("correct", 1) - 1
+                            )
+                        )
                     }
                     if (questions.isNotEmpty()) {
                         if (roomPin == null) {
@@ -211,6 +214,7 @@ class PlayQuizActivity : AppCompatActivity() {
             override fun onTick(millisUntilFinished: Long) {
                 progressBar.progress = millisUntilFinished.toInt()
             }
+
             override fun onFinish() {
                 progressBar.progress = 0
                 handleTimeOut()
@@ -235,7 +239,8 @@ class PlayQuizActivity : AppCompatActivity() {
         } else {
             clickedButton.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F44336"))
             if (correctIndex in buttons.indices) {
-                buttons[correctIndex].backgroundTintList = ColorStateList.valueOf(Color.parseColor("#4CAF50"))
+                buttons[correctIndex].backgroundTintList =
+                    ColorStateList.valueOf(Color.parseColor("#4CAF50"))
             }
         }
 
@@ -249,7 +254,8 @@ class PlayQuizActivity : AppCompatActivity() {
 
         buttons.forEach { it.isEnabled = false }
         if (correctIndex in buttons.indices) {
-            buttons[correctIndex].backgroundTintList = ColorStateList.valueOf(Color.parseColor("#4CAF50"))
+            buttons[correctIndex].backgroundTintList =
+                ColorStateList.valueOf(Color.parseColor("#4CAF50"))
         }
 
         proceedToNext(false, 99)
@@ -273,7 +279,8 @@ class PlayQuizActivity : AppCompatActivity() {
         val scoreToAdd = if (isCorrect) 1 else 0
         val url = "https://quiz-app.alwaysdata.net/api/sync_question.php"
 
-        val request = object : StringRequest(Method.POST, url,
+        val request = object : StringRequest(
+            Method.POST, url,
             { response ->
                 try {
                     val json = JSONObject(response)
@@ -292,12 +299,12 @@ class PlayQuizActivity : AppCompatActivity() {
                                     val oppAnswer = oppAnswers.getInt(i)
                                     if (oppAnswer in buttons.indices) {
                                         val oppBtn = buttons[oppAnswer]
-                                        // Dodaj ikonkę, jeśli jeszcze jej nie ma
                                         if (!oppBtn.text.toString().contains("\uD83D\uDC64")) {
                                             oppBtn.text = oppBtn.text.toString() + " \uD83D\uDC64"
                                         }
                                         if (oppAnswer != correctIndex) {
-                                            oppBtn.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#F44336"))
+                                            oppBtn.backgroundTintList =
+                                                ColorStateList.valueOf(Color.parseColor("#F44336"))
                                         }
                                     }
                                 }
@@ -315,7 +322,9 @@ class PlayQuizActivity : AppCompatActivity() {
                             syncHandler.postDelayed(syncRunnable!!, 1000)
                         }
                     }
-                } catch (e: JSONException) { e.printStackTrace() }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
             },
             {
                 syncRunnable = Runnable {
@@ -351,6 +360,8 @@ class PlayQuizActivity : AppCompatActivity() {
         countDownTimer?.cancel()
         syncRunnable?.let { syncHandler.removeCallbacks(it) }
 
+        saveResultToDatabase(score, questions.size)
+
         if (roomPin != null) {
             val intent = Intent(this, MultiplayerScoreActivity::class.java)
             intent.putExtra("ROOM_PIN", roomPin)
@@ -361,15 +372,15 @@ class PlayQuizActivity : AppCompatActivity() {
             val totalSeconds = (totalTimeMillis / 1000).toInt()
             val totalFormatted = String.format("%02d:%02d", totalSeconds / 60, totalSeconds % 60)
 
-            val avgTimeSeconds = if (questionTimes.isNotEmpty()) (questionTimes.average() / 1000).toInt() else 0
+            val avgTimeSeconds =
+                if (questionTimes.isNotEmpty()) (questionTimes.average() / 1000).toInt() else 0
 
             setContentView(R.layout.activity_score)
 
             findViewById<TextView>(R.id.tvScore).text = "Twój wynik: $score / ${questions.size}"
             findViewById<TextView>(R.id.tvPercentage).text = "${(score * 100) / questions.size}%"
-            findViewById<TextView>(R.id.tvTime).text = "Całkowity czas: $totalFormatted\nŚredni czas na pytanie: ${avgTimeSeconds}s"
-
-            saveResultToDatabase(score, questions.size)
+            findViewById<TextView>(R.id.tvTime).text =
+                "Całkowity czas: $totalFormatted\nŚredni czas na pytanie: ${avgTimeSeconds}s"
 
             findViewById<Button>(R.id.btnReturnMenu).setOnClickListener { finish() }
         }
@@ -378,25 +389,36 @@ class PlayQuizActivity : AppCompatActivity() {
     private fun saveResultToDatabase(finalScore: Int, maxScore: Int) {
         val sharedPref = getSharedPreferences("QuizAppPrefs", MODE_PRIVATE)
         val username = sharedPref.getString("USERNAME", "Anonim") ?: "Anonim"
+
+        val avgTime = if (questionTimes.isNotEmpty()) (questionTimes.average() / 1000.0) else 0.0
+
         val url = "https://quiz-app.alwaysdata.net/api/save_result.php"
 
-        val stringRequest = object : StringRequest(Method.POST, url, {}, {}) {
+        val stringRequest = object : StringRequest(Method.POST, url,
+            { response ->
+                android.util.Log.d("QuizApp_SQL", "Wynik i czas zapisane: $response")
+            },
+            { error ->
+                android.util.Log.e("QuizApp_SQL", "Błąd zapisu: ${error.message}")
+            }
+        ) {
             override fun getParams(): MutableMap<String, String> {
-                return hashMapOf(
-                    "username" to username,
-                    "quiz_id" to quizId.toString(),
-                    "score" to finalScore.toString(),
-                    "max_score" to maxScore.toString()
-                )
+                val params = hashMapOf<String, String>()
+                params["username"] = username
+                params["quiz_id"] = quizId.toString()
+                params["score"] = finalScore.toString()
+                params["max_score"] = maxScore.toString()
+                params["average_time"] = avgTime.toString()
+                return params
+            }
+
+            override fun getHeaders(): MutableMap<String, String> {
+                val headers = HashMap<String, String>()
+                headers["Content-Type"] = "application/x-www-form-urlencoded"
+                return headers
             }
         }
         Volley.newRequestQueue(this).add(stringRequest)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        countDownTimer?.cancel()
-        syncRunnable?.let { syncHandler.removeCallbacks(it) }
     }
 }
 

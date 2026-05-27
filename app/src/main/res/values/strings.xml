@@ -1,5 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Quziooos</string>
-    <string name="open_nav">Otwórz</string>
-    <string name="close_nav">Zamknij</string>
+    <!-- App name -->
+    <string name="app_name">QuizApp</string>
+
+    <!-- Bottom Navigation -->
+    <string name="nav_quizzes">Quizzes</string>
+    <string name="nav_ranking">Ranking</string>
+    <string name="nav_stats">Stats</string>
+    <string name="nav_about">Info</string>
+
+    <!-- WelcomeActivity Header -->
+    <string name="welcome_user_format">Welcome, %1$s!</string>
+    <string name="welcome_user_default">Welcome, User!</string>
+    <string name="logout_btn">Logout</string>
+
+    <!-- Mode Selection Screen (QuizzesFragment) -->
+    <string name="select_mode_title">Select game mode</string>
+    <string name="btn_singleplayer">Singleplayer Mode</string>
+    <string name="btn_multiplayer">Multiplayer Mode</string>
+
+    <!-- Ranking Screen (RankingFragment) -->
+    <string name="ranking_title">Global Ranking 🏆</string>
+    <string name="rank_header_num">#</string>
+    <string name="rank_header_player">PLAYER</string>
+    <string name="rank_header_points">POINTS</string>
+    <string name="pts_suffix">%1$d pts</string>
+    <string name="ranking_load_error">Error loading ranking</string>
+
+    <!-- Statistics Screen (StatsFragment) -->
+    <string name="stats_title">Your Statistics 📊</string>
+    <string name="stats_games_played">Games played</string>
+    <string name="stats_best_score">Best score</string>
+    <string name="stats_analysis_header">Profile details</string>
+    <string name="stats_avg_accuracy">Average accuracy:</string>
+    <string name="stats_accuracy_value">%1$d%% correct</string>
+    <string name="stats_avg_time">Response time:</string>
+    <string name="stats_time_value">%1$.1f seconds</string>
+    <string name="stats_fav_mode">Favorite mode:</string>
+    <string name="stats_mode_singleplayer">Singleplayer</string>
+    <string name="stats_mode_multiplayer">Multiplayer</string>
+    <string name="stats_mode_none">None</string>
+    <string name="stats_mode_undefined">Undefined</string>
+
+    <!-- Info / About and Tutorial Screen (AboutFragment) -->
+    <string name="tutorial_header">How to play? – Guide 💡</string>
+    <string name="tutorial_default_title">Starting the game</string>
+    <string name="tutorial_default_desc">Choose your preferred mode in the main menu. You can play Singleplayer mode or challenge your friends in real-time Multiplayer!</string>
+    <string name="btn_back">Back</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_finish">Finish</string>
+    <string name="tutorial_step_counter">Step %1$d of %2$d</string>
+
+    <string name="tutorial_step1_title">Mode Selection</string>
+    <string name="tutorial_step1_desc">Choose your preferred game mode in the main menu. You have Singleplayer mode and real-time Multiplayer battles at your disposal!</string>
+
+    <string name="tutorial_step2_title">Answering Questions</string>
+    <string name="tutorial_step2_desc">Each question has a limited time (10 seconds). Read the questions carefully and click the correct answer before the time runs out. Green means success, red means failure!</string>
+
+    <string name="tutorial_step3_title">Multiplayer Lobby</string>
+    <string name="tutorial_step3_desc">In online mode, you can create a room or join an existing one using a unique PIN. Your opponent\'s answers are visible as player icons on the buttons!</string>
+
+    <string name="tutorial_step4_title">Profile Statistics</string>
+    <string name="tutorial_step4_desc">Go to the \'Stats\' tab to quickly check your games played, best accuracy, average response time, and favorite modes directly from the server!</string>
+
+    <string name="metadata_header">About Game Metadata</string>
+    <string name="app_version_label">Stable version 1.0.5</string>
+    <string name="app_description_text">This application is a modern educational and entertainment platform. It allows players to dynamically test their knowledge, preview stats in real-time, and create unique multiplayer lobbies!</string>
+    <string name="authors_header">Authors and IT Team</string>
+    <string name="authors_description_text">Project written 100% natively in Kotlin.\nPHP backend and MySQL database on Alwaysdata.\nAsynchronous network communication thanks to Volley.</string>
+
+    <!-- Quiz and Final Score Screen (PlayQuizActivity / ScoreActivity) -->
+    <string name="quiz_no_questions">This quiz has no questions yet!</string>
+    <string name="quiz_load_error">Error reading data from server.</string>
+    <string name="quiz_connection_error">Connection error with server!</string>
+    <string name="quiz_waiting_opponent">Waiting for opponent...</string>
+    <string name="score_final_score">Your score: %1$d / %2$d</string>
+    <string name="score_percentage">%1$d%%</string>
+    <string name="score_time_summary">Total time: %1$s\nAverage time per question: %2$ds</string>
+    <string name="btn_return_menu">Back to menu</string>
+    <string name="db_save_success">Saved successfully!</string>
+    <string name="db_save_error">Error saving results: %1$s</string>
+
+    <!-- activity_menu -->
+    <string name="menu_title_singleplayer">Singleplayer Mode</string>
+    <string name="btn_choose_quiz">Select a Quiz</string>
+    <string name="btn_create_own_quiz">Create a Custom Quiz</string>
+    <string name="btn_view_ranking">Leaderboard</string>
+
+    <!-- activity_multiplayer -->
+    <string name="menu_title_multiplayer">Multiplayer Mode</string>
+    <string name="multiplayer_invite_friend">Invite a Friend</string>
+    <string name="btn_2_players">2 Players</string>
+    <string name="btn_3_players">3 Players</string>
+    <string name="multiplayer_join_game">Join Game</string>
+    <string name="hint_enter_pin">Enter 4-digit PIN</string>
+    <string name="btn_join">Join!</string>
+
+    <!-- activity_multiplayer_score -->
+    <string name="winner_text">YOU WON! 🏆</string>
+    <string name="default_host_name">Host</string>
+    <string name="default_guest1_name">Guest 1</string>
+    <string name="default_guest2_name">Guest 2</string>
+    <string name="btn_next_round">Select Next Quiz</string>
+    <string name="btn_leave">End Game</string>
+
+    <!-- activity_play_quiz -->
+    <string name="quiz_loading_question">Loading question...</string>
+
+    <!-- activity_add_quiz -->
+    <string name="add_quiz_header">Quiz Creator</string>
+    <string name="add_quiz_category_label">New category name:</string>
+    <string name="hint_quiz_category">e.g., History, Movies...</string>
+    <string name="btn_create_quiz_and_add">Create and Add Questions</string>
+
+    <!-- activity_choose_quiz -->
+    <string name="choose_quiz_header">Select Quiz</string>
+    <string name="btn_back_to_menu">Back to Menu</string>
+
+    <!-- activity_create_quiz -->
+    <string name="create_questions_header">Question Creator</string>
+    <string name="select_category_label">Select Category:</string>
+    <string name="btn_add_new_category">+ Create brand new quiz</string>
+    <string name="hint_enter_question">Enter question content...</string>
+    <string name="hint_media_url">Image or video link (Optional)</string>
+    <string name="hint_answer_a">Answer A</string>
+    <string name="hint_answer_b">Answer B</string>
+    <string name="hint_answer_c">Answer C</string>
+    <string name="hint_answer_d">Answer D</string>
+    <string name="correct_answer_label">Which answer is correct?</string>
+    <string name="btn_submit_question_db">Add Question to DB</string>
+
+    <!-- activity_lobby -->
+    <string name="lobby_pin_header">Your Room Code:</string>
+    <string name="lobby_waiting_msg">Waiting for friend to enter code...\nGame will start automatically.</string>
+    <string name="btn_cancel_and_back">Cancel and Go Back</string>
+
+    <!-- activity_main -->
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_login_submit">Log In</string>
+    <string name="btn_create_account">Create Account</string>
+
+    <!-- activity_register -->
+    <string name="register_title">Create a new account</string>
+    <string name="hint_email">Email address</string>
+    <string name="btn_register_submit">Register</string>
+    <string name="btn_already_have_account">Already have an account? Log in</string>
+
+    <!-- activity_score -->
+    <string name="score_quiz_ended">Quiz Ended! 🎉</string>
+    <string name="score_time_label_format">Game time: %1$s</string>
+    <string name="score_time_default">Game time: 00:00</string>
+    <string name="btn_return_menu_text">Back to Menu</string>
+
+    <!-- item_quiz_card -->
+    <string name="quiz_card_title_default">Quiz Title</string>
+    <string name="quiz_author_format">Creator: %1$s</string>
+    <string name="quiz_author_default">Creator: System</string>
+    <string name="quiz_questions_count_format">Questions: %1$d</string>
+    <string name="quiz_questions_count_default">Questions: 0</string>
+
+    <!-- item_ranking -->
+    <string name="rank_name_default">Player Name</string>
 </resources>

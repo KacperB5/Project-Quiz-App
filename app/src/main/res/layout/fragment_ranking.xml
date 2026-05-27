@@ -11,7 +11,6 @@
         android:id="@+id/tvHeaderTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
         android:text="@string/ranking_title"
         android:textAlignment="center"
         android:textColor="#FFFFFF"
@@ -76,12 +75,11 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
         android:clipToPadding="false"
         android:paddingBottom="24dp"
         android:scrollbars="none"
         app:layout_constraintTop_toBottomOf="@+id/divider"
-        app:layout_constraintBottom_toTopOf="@+id/btnBackToMenu"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -90,26 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
         </LinearLayout>
-
     </ScrollView>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnBackToMenu"
-        android:layout_width="0dp"
-        android:layout_height="65dp"
-        android:layout_marginBottom="40dp"
-        android:text="@string/btn_back_to_menu"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="#03DAC5"
-        android:backgroundTint="#1E1E1E"
-        app:strokeColor="#03DAC5"
-        app:strokeWidth="2dp"
-        app:cornerRadius="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

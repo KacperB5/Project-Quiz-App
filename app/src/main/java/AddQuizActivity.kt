@@ -22,7 +22,7 @@ class AddQuizActivity : AppCompatActivity() {
         btnCreateQuiz.setOnClickListener {
             val title = etQuizTitle.text.toString().trim()
             if (title.isNotEmpty()) {
-                btnCreateQuiz.isEnabled = false // Blokujemy przycisk na czas ładowania
+                btnCreateQuiz.isEnabled = false
                 createNewCategory(title, btnCreateQuiz)
             } else {
                 Toast.makeText(this, "Wpisz nazwę!", Toast.LENGTH_SHORT).show()

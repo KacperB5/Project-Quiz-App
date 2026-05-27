@@ -55,7 +55,6 @@ class MultiplayerScoreActivity : AppCompatActivity() {
                     findViewById<TextView>(R.id.tvGuestName).text = gName
                     findViewById<TextView>(R.id.tvGuestScore).text = gScore.toString()
 
-                    // Obsługa 3 gracza
                     val tvGuest2Name = findViewById<TextView?>(R.id.tvGuest2Name)
                     val tvGuest2Score = findViewById<TextView?>(R.id.tvGuest2Score)
                     val cardGuest2 = findViewById<View?>(R.id.cardGuest2)
@@ -68,7 +67,6 @@ class MultiplayerScoreActivity : AppCompatActivity() {
                         cardGuest2?.visibility = View.GONE
                     }
 
-                    // Kto wygrał? (Zaktualizowana logika z remisami)
                     val myScore = when (myName) {
                         hName -> hScore
                         gName -> gScore
@@ -76,7 +74,6 @@ class MultiplayerScoreActivity : AppCompatActivity() {
                     }
                     val maxScore = maxOf(hScore, gScore, g2Score)
 
-                    // Liczymy, ilu aktywnych graczy ma ten najwyższy wynik
                     var winnersCount = 0
                     if (hScore == maxScore) winnersCount++
                     if (gName.isNotEmpty() && gName != "Brak" && gName != "null" && gScore == maxScore) winnersCount++
