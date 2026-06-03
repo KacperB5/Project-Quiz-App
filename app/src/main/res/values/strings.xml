@@ -162,4 +162,13 @@
 
     <!-- item_ranking -->
     <string name="rank_name_default">Player Name</string>
+
+    <!-- Dynamic Formatters -->
+    <string name="stats_default_accuracy">0%% correct</string>
+    <string name="stats_default_time">0.0 seconds</string>
+    <string name="stats_format_accuracy">%1$d%% correct</string>
+    <string name="stats_format_time">%1$.1f seconds</string>
+
+    <string name="stats_default_count">0</string>
+    <string name="stats_default_percent">0%</string>
 </resources>

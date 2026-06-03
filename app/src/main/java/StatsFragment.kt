@@ -88,11 +88,25 @@ class StatsFragment : Fragment() {
 
     private fun updateUI(games: Int, best: Int, accuracy: Int, time: Double, mode: String) {
         activity?.runOnUiThread {
+            if (!isAdded) return@runOnUiThread
+
+            // Wyświetlanie liczby gier
             tvGamesPlayedCount.text = games.toString()
-            tvBestScoreCount.text = "$best%"
-            tvAvgAccuracyValue.text = "$accuracy% poprawnych"
-            tvAvgTimeValue.text = String.format("%.1f sekundy", time)
-            tvFavModeValue.text = mode
+
+            // Poprawione, bezpieczne formatowanie procentów wyniku (np. "85%")
+            tvBestScoreCount.text = getString(R.string.stats_format_accuracy, best)
+
+            // Dynamiczne szablony językowe z strings.xml
+            tvAvgAccuracyValue.text = getString(R.string.stats_format_accuracy, accuracy)
+            tvAvgTimeValue.text = getString(R.string.stats_format_time, time)
+
+            // Tłumaczenie ulubionego trybu gry w zależności od języka systemu
+            val translatedMode = when (mode.lowercase()) {
+                "singleplayer" -> getString(R.string.stats_mode_singleplayer)
+                "multiplayer" -> getString(R.string.stats_mode_multiplayer)
+                else -> getString(R.string.stats_mode_none)
+            }
+            tvFavModeValue.text = translatedMode
 
             pbStatsLoading.visibility = View.GONE
             scrollViewStats.visibility = View.VISIBLE
