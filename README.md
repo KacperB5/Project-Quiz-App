@@ -1,130 +1,277 @@
-QuizApp — Natywna Aplikacja Quizowa na system Android
+<div align="center">
 
-QuizApp to nowoczesna, w pełni natywna aplikacja mobilna stworzona na platformę Android w języku Kotlin. Projekt łączy w sobie elementy gry edukacyjnej, rywalizacji sieciowej oraz rozbudowanego panelu analitycznego użytkownika. Aplikacja komunikuje się asynchronicznie z zewnętrzną bazą danych MySQL za pośrednictwem dedykowanego API napisanego w języku PHP.
+# 📱 QuizApp
 
-Główne Funkcjonalności
+### Natywna Aplikacja Quizowa na Android
 
-1. Tryb Jednoosobowy (Singleplayer)
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.9-7F52FF?style=flat-square&logo=kotlin&logoColor=white)](https://kotlinlang.org)
+[![Android](https://img.shields.io/badge/Android-API%2033+-3DDC84?style=flat-square&logo=android&logoColor=white)](https://developer.android.com)
+[![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?style=flat-square&logo=php&logoColor=white)](https://www.php.net)
+[![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=flat-square&logo=mysql&logoColor=white)](https://www.mysql.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-03DAC5?style=flat-square)](LICENSE)
 
-Dynamiczna rozgrywka: Gracz odpowiada na losowo wybrane zestawy pytań (maksymalnie 10 pytań na sesję).
+**QuizApp** to nowoczesna, w pełni natywna aplikacja mobilna na platformę Android, łącząca elementy gry edukacyjnej, rywalizacji sieciowej i panelu analitycznego. Komunikuje się asynchronicznie z zewnętrzną bazą danych MySQL przez dedykowane API napisane w PHP.
 
-Presja czasu: Każde pytanie posiada dedykowany pasek czasu (LinearProgressIndicator) odliczający dokładnie 10 sekund na udzielenie odpowiedzi.
+[Funkcjonalności](#-funkcjonalności) · [Architektura](#-architektura) · [Uruchomienie](#-uruchomienie) · [API](#-endpointy-api) · [Baza danych](#-baza-danych) · [Autorzy](#-autorzy)
 
-Wsparcie dla multimediów: Pytania mogą zawierać statyczne obrazy (ładowane asynchronicznie z sieci) bądź materiały wideo (odtwarzane natywnie w osadzonym komponencie WebView).
+</div>
 
-Interfejs rezultatów: Po zakończeniu gry użytkownik otrzymuje czytelne podsumowanie z liczbą punktów, procentową skutecznością, całkowitym czasem rozgrywki oraz średnim czasem reakcji.
+---
 
-2. Tryb Wieloosobowy (Multiplayer)
+## Funkcjonalności
 
-Pokoje gier (Lobby): Możliwość zaproszenia znajomych do gry dla 2 lub 3 graczy poprzez wygenerowanie unikatowego, 4-cyfrowego kodu PIN.
+### Tryb Jednoosobowy (Singleplayer)
+- **Losowe pytania** — do 10 losowo wybranych pytań na sesję
+- **Presja czasu** — 10-sekundowy pasek odliczający czas odpowiedzi (`CountDownTimer` + `ProgressBar`)
+- **Multimedia** — pytania mogą zawierać obrazy (ładowane przez Glide) lub wideo `.mp4` (odtwarzane w `WebView` z HTML5 `<video>`)
+- **Ekran wyników** — podsumowanie z liczbą punktów, procentową celnością, całkowitym czasem rozgrywki i średnim czasem na pytanie
 
-Synchronizacja w czasie rzeczywistym: Aplikacja w ułamku sekundy wysyła status odpowiedzi gracza i czeka na ruchy przeciwników (skrypt sync_question.php).
+### Tryb Wieloosobowy (Multiplayer)
+- **Pokoje gier** — tworzenie pokoju dla 2 lub 3 graczy z unikalnym 4-cyfrowym PIN-em
+- **Synchronizacja w czasie rzeczywistym** — polling co 1 s przez `sync_question.php`; automatyczny timeout po 15 s
+- **Wizualizacja rywali** — odpowiedzi przeciwników pokazane ikonką 👤 na przyciskach odpowiedzi
+- **Kolejne rundy** — host może wybrać nowy quiz bez opuszczania pokoju
+- **Ekran podium** — system wykrywa zwycięzcę, remis 🤝 i przegraną 💀
 
-Interaktywne przyciski: Odpowiedzi przeciwników są na bieżąco wizualizowane na przyciskach odpowiedzi za pomocą dedykowanych ikonek gracza (👤).
+### Kreator Quizów
+- Tworzenie nowych kategorii (quizów) z poziomu aplikacji
+- Formularz pytania: treść, URL obrazu/wideo, 4 warianty odpowiedzi (A–D), wskazanie poprawnej odpowiedzi
+- Pytania trafiają do **kolejki moderacji** przed publikacją
 
-Ekran końcowy podium: System automatycznie wyłania zwycięzcę i wyświetla punkty każdego z graczy po zakończeniu ostatniej rundy.
+### Panel Moderacji (Admin)
+- Rola `admin` pobierana z bazy danych przy logowaniu
+- Przeglądanie kolejki oczekujących pytań
+- Akcje: **ZATWIERDŹ** (pytanie aktywne) lub **ODRZUĆ** (pytanie usuwane)
 
-3. Statystyki Profilu i Globalny Ranking
+### Statystyki i Ranking
+- **Profil gracza**: liczba rozegranych gier, najlepszy wynik %, średnia celność, średni czas odpowiedzi, ulubiony tryb
+- **Globalny ranking** — lista graczy posortowana wg sumarycznej liczby punktów
 
-Sekcja Statystyk (StatsFragment): Rozbudowany panel pobierający z bazy danych dane o profilu użytkownika: łączna liczba rozegranych gier, procentowa celność, ulubiony tryb gry oraz precyzyjny średni czas odpowiedzi.
+### Wielojęzyczność (PL / EN)
+- Przełącznik flag 🇵🇱 / 🇬🇧 na ekranie powitalnym
+- Zmiana języka **bez restartu aplikacji** — `attachBaseContext()` + `AppCompatDelegate.setApplicationLocales()` + `recreate()`
+- Wszystkie zasoby tekstowe w `strings.xml` (domyślny EN) i `strings.xml` w `values-pl/` (PL)
 
-Globalna Tabela Liderów (RankingFragment): Lista najlepszych graczy uszeregowana według sumarycznej liczby zdobytych punktów w całej historii rozgrywek.
+---
 
-4. Kreator Quizów i Pytań
+## Architektura
 
-Tworzenie kategorii: Gracz może z poziomu aplikacji dodać zupełnie nową kategorię quizu.
+```
+┌─────────────────────────────────────────────┐
+│              Android App (Kotlin)            │
+│                                             │
+│  MainActivity ──► WelcomeActivity           │
+│       │                  │                  │
+│  RegisterActivity   ┌────┴────┐             │
+│                     │Fragments│             │
+│                     │ Quizzes │             │
+│                     │ Ranking │             │
+│                     │  Stats  │             │
+│                     │  About  │             │
+│                     └────┬────┘             │
+│                          │                  │
+│   ChooseQuizActivity ◄───┤                  │
+│   PlayQuizActivity       │                  │
+│   MultiplayerActivity    │                  │
+│   LobbyActivity          │                  │
+│   MultiplayerScoreActivity                  │
+│   CreateQuizActivity                        │
+└──────────────┬──────────────────────────────┘
+               │  HTTP (Volley / OkHttp)
+               ▼
+┌─────────────────────────────────────────────┐
+│         Backend PHP — alwaysdata.net        │
+│              /api/*.php                     │
+└──────────────┬──────────────────────────────┘
+               │  PDO / MySQLi
+               ▼
+┌─────────────────────────────────────────────┐
+│               MySQL Database                │
+│  users · quizzes · questions · results      │
+│  rooms · room_players · room_scores         │
+└─────────────────────────────────────────────┘
+```
 
-Dodawanie pytań: Prosty formularz umożliwiający przypisywanie pytań, linków do multimediów, czterech wariantów odpowiedzi oraz określenie poprawnej odpowiedzi bezpośrednio do zdalnej bazy danych.
+### Stack technologiczny
 
-5. Zaawansowana Wielojęzyczność (Wymuszanie Języka)
+| Warstwa | Technologia |
+|---------|-------------|
+| Język aplikacji | Kotlin |
+| UI | XML Layouts + Material Design 3 (ciemny motyw `#121212`, akcent `#03DAC5`) |
+| Komunikacja sieciowa | [Volley 1.2.1](https://github.com/google/volley) (GET/POST JSON), [OkHttp 4.12.0](https://square.github.io/okhttp/) (rejestracja) |
+| Ładowanie obrazów | [Glide 4.16.0](https://github.com/bumptech/glide) |
+| Backend | PHP 8.x z PDO + Prepared Statements |
+| Baza danych | MySQL 8.0 |
+| Hosting | [alwaysdata.net](https://www.alwaysdata.com) |
+| Min SDK | 33 (Android 13) |
+| Target SDK | 36 |
 
-Przełącznik flag: Bezpośrednio na ekranie powitalnym umieszczono klikalne ikony flag Polski (🇵🇱) oraz Wielkiej Brytanii (🇬🇧).
+---
 
-Bezproblemowe odświeżanie: Po kliknięciu wybranej flagi aplikacja zapisuje preferencje użytkownika w pamięci podręcznej (SharedPreferences), nadpisuje kontekst bazowy i natychmiastowo przeładowuje aktualny ekran (recreate()), automatycznie tłumacząc każdy komponent interfejsu (w tym dynamiczny samouczek krok po kroku).
+## Uruchomienie
 
-Architektura Technologiczna
+### Wymagania
+- Android Studio **Hedgehog** (2023.1.1) lub nowszy
+- JDK 11+
+- Urządzenie / emulator z Android **API 33+** (rekomendowane API 34+)
+- Dostęp do internetu
 
-Frontend (Aplikacja Mobilna)
+### Kroki
 
-Język: Kotlin (100% natywne kodowanie).
+1. **Klonuj repozytorium**
+   ```bash
+   git clone https://github.com/KacperB5/Project-Quiz-App.git
+   cd Project-Quiz-App
+   ```
 
-UI/UX: XML Layouts zgodny z wytycznymi Material Design 3 (ciemny, nowoczesny motyw #121212 z akcentami turkusowymi #03DAC5 oraz fioletowymi #6200EE).
+2. **Otwórz w Android Studio**
+   ```
+   File → New → Import Project → wskaż folder główny
+   ```
+   Poczekaj na zakończenie synchronizacji Gradle.
 
-Komunikacja sieciowa: Volley (asynchroniczne zapytania HTTP GET/POST, obsługa JSON) oraz OkHttp.
+3. **Sprawdź zasoby językowe**
+   - Angielski (domyślny): `app/src/main/res/values/strings.xml`
+   - Polski: `app/src/main/res/values-pl/strings.xml`
 
-Wielojęzyczność: Pliki lokalizacyjne strings.xml zaimplementowane w strukturze values (domyślny/angielski) oraz values-pl (polski).
+4. **Uruchom aplikację**
+   - Podłącz telefon z włączonym **USB Debugging** lub uruchom emulator
+   - Kliknij ▶ **Run app** w Android Studio
 
-Pobieranie obrazów: Biblioteka Glide zapewniająca szybkie buforowanie i płynne wyświetlanie grafik z sieci.
+5. **Czyszczenie przy problemach z zasobami**
+   ```
+   Build → Clean Project → Build → Rebuild Project
+   ```
 
-Backend & Baza Danych
+> **Uwaga:** Aplikacja korzysta z backendu hostowanego pod adresem `https://quiz-app.alwaysdata.net/api/`. Nie jest wymagana żadna lokalna konfiguracja serwera.
 
-Język serwerowy: PHP (skrypty PDO i MySQLi z zabezpieczeniami typu Prepared Statements przed atakami SQL Injection).
+---
 
-Serwer bazy danych: MySQL (baza danych hostowana na stabilnej, darmowej chmurze Alwaysdata).
+## Endpointy API
 
-Hosting API: https://quiz-app.alwaysdata.net/api/
+Wszystkie endpointy dostępne pod: `https://quiz-app.alwaysdata.net/api/`
 
-Struktura Zdalnego API (PHP)
+### Autoryzacja
 
-Aplikacja współpracuje z następującymi punktami końcowymi (endpoints):
+| Endpoint | Metoda | Opis |
+|----------|--------|------|
+| `login.php` | POST | Logowanie — zwraca `username` i `role` |
+| `register.php` | POST | Rejestracja nowego użytkownika |
 
-quizzes.php: Pobiera listę pytań przypisanych do wybranego ID quizu.
+### Quizy i pytania
 
-save_result.php: Zapisuje wynik ukończonego quizu w tabeli results (w tym parametr average_time).
+| Endpoint | Metoda | Opis |
+|----------|--------|------|
+| `get_quiz_list.php` | GET | Lista wszystkich kategorii quizów |
+| `quizzes.php?quiz_id=N` | GET | Pytania dla danego quizu |
+| `add_quiz_category.php` | POST | Tworzenie nowej kategorii |
+| `add_question.php` | POST | Dodanie pytania do kolejki moderacji |
 
-get_users_stats.php: Przetwarza i agreguje statystyki konkretnego użytkownika (wykorzystuje zaawansowane zapytania SQL z NULLIF i COALESCE w celu ignorowania pustych rekordów czasowych).
+### Moderacja
 
-get_ranking.php: Zwraca tablicę JSON z globalną listą graczy i ich sumarycznymi punktami.
+| Endpoint | Metoda | Opis |
+|----------|--------|------|
+| `moderate_content.php` | GET/POST | Pobieranie kolejki i zatwierdzanie/odrzucanie pytań |
 
-sync_question.php: Odpowiada za koordynację, synchronizację oraz pobieranie stanów odpowiedzi graczy w lobby multiplayer.
+### Wyniki i statystyki
 
-Struktura Tabeli Wyników (results)
+| Endpoint | Metoda | Opis |
+|----------|--------|------|
+| `save_result.php` | POST | Zapis wyniku ukończonego quizu |
+| `get_user_stats.php` | GET | Statystyki profilu użytkownika |
+| `get_ranking.php` | GET | Globalny ranking graczy |
 
-+------------------+-----------------------+-------------------------------------------------+
-| Nazwa Kolumny    | Typ Danych            | Opis                                            |
-+------------------+-----------------------+-------------------------------------------------+
-| id               | INT (AUTO_INCREMENT)  | Klucz główny rekordu                            |
-| username         | VARCHAR(100)          | Unikatowy identyfikator gracza                  |
-| quiz_id          | INT                   | ID powiązanego quizu                            |
-| score            | INT                   | Punkty zdobyte przez użytkownika                |
-| max_score        | INT                   | Maksymalna możliwa do zdobycia liczba punktów   |
-| average_time     | DOUBLE (lub FLOAT)    | Średni czas odpowiedzi na pytanie (w sekundach) |
-+------------------+-----------------------+-------------------------------------------------+
+### Multiplayer
 
-🔧 Jak Uruchomić i Przetestować Projekt
+| Endpoint | Metoda | Opis |
+|----------|--------|------|
+| `create_room.php` | POST | Tworzenie pokoju gry (generuje PIN) |
+| `join_room.php` | POST | Dołączanie do pokoju przez PIN |
+| `check_room_status.php` | GET | Status pokoju (waiting / playing) |
+| `sync_question.php` | POST | Synchronizacja odpowiedzi graczy |
+| `get_room_results.php` | GET | Wyniki końcowe pokoju |
+| `check_next_round.php` | GET | Sprawdzenie czy host wybrał nową rundę |
+| `next_round.php` | POST | Ustawienie nowego quizu przez hosta |
+| `close_room.php` | POST | Zamknięcie pokoju przez hosta |
 
-1. Klonowanie i Import projektu
+---
 
-Pobierz kod źródłowy projektu Android Studio.
+## Baza danych
 
-Wybierz opcję File -> New -> Import Project i wskaż folder główny aplikacji.
+### Tabela `results`
 
-Poczekaj na zakończenie procesu synchronizacji narzędzia Gradle.
+| Kolumna | Typ | Opis |
+|---------|-----|------|
+| `id` | INT AUTO_INCREMENT | Klucz główny |
+| `username` | VARCHAR(100) | Identyfikator gracza |
+| `quiz_id` | INT | ID powiązanego quizu |
+| `score` | INT | Punkty zdobyte przez gracza |
+| `max_score` | INT | Maksymalna możliwa liczba punktów |
+| `average_time` | DOUBLE | Średni czas odpowiedzi (sekundy) |
 
-2. Konfiguracja Tłumaczeń i Zasobów
+> Backend stosuje **Prepared Statements** (PDO) we wszystkich zapytaniach, co chroni przed atakami SQL Injection.
 
-Upewnij się, że angielskie zasoby znajdują się w pliku app/src/main/res/values/strings.xml.
+---
 
-Upewnij się, że polskie zasoby znajdują się w pliku app/src/main/res/values-pl/strings.xml.
+## Struktura projektu
 
-W celu przetestowania dynamicznej zmiany języka, zaloguj się na swoje konto użytkownika i klikaj ikony flag widoczne w górnym nagłówku panelu powitalnego.
+```
+app/src/main/
+├── java/
+│   ├── MainActivity.kt          # Ekran logowania
+│   ├── RegisterActivity.kt      # Rejestracja (OkHttp)
+│   ├── WelcomeActivity.kt       # Ekran główny + nawigacja dolna + zmiana języka
+│   ├── MenuActivity.kt          # Menu trybu singleplayer
+│   ├── ChooseQuizActivity.kt    # Wybór quizu (solo lub multiplayer)
+│   ├── PlayQuizActivity.kt      # Rozgrywka (timer, multimedia, sync)
+│   ├── MultiplayerActivity.kt   # Tworzenie / dołączanie do pokoju
+│   ├── LobbyActivity.kt         # Oczekiwanie na start (polling)
+│   ├── MultiplayerScoreActivity.kt  # Ekran wyników multiplayer
+│   ├── CreateQuizActivity.kt    # Kreator pytań + panel moderacji
+│   ├── RankingActivity.kt       # Ranking (Activity)
+│   ├── QuizzesFragment.kt       # Fragment: wybór trybu gry
+│   ├── RankingFragment.kt       # Fragment: globalny ranking
+│   ├── StatsFragment.kt         # Fragment: statystyki użytkownika
+│   └── AboutFragment.kt         # Fragment: samouczek krok-po-kroku
+├── res/
+│   ├── layout/                  # Pliki XML layoutów
+│   ├── values/strings.xml       # Zasoby tekstowe (EN, domyślne)
+│   ├── values-pl/strings.xml    # Zasoby tekstowe (PL)
+│   ├── anim/                    # Animacje (fade_in, slide_in_right…)
+│   └── drawable/                # Ikony i zasoby graficzne
+└── AndroidManifest.xml
+```
 
-3. Kompilacja i Uruchomienie
+---
 
-Podłącz fizyczny telefon z systemem Android lub uruchom emulator (rekomendowany poziom API >= 29).
+## Zrzuty ekranu
 
-Kliknij ikonę zielonego trójkąta (Run app) w górnym pasku Android Studio.
+> *(Dodaj zrzuty ekranu do folderu `/screenshots` i zaktualizuj ścieżki poniżej)*
 
-W przypadku wystąpienia problemów z czyszczeniem starych zasobów, wybierz z menu górnego Build -> Clean Project, a następnie Build -> Rebuild Project.
+| Logowanie | Wybór quizu | Rozgrywka | Multiplayer |
+|-----------|-------------|-----------|-------------|
+| ![login](screenshots/login.png) | ![quiz](screenshots/choose_quiz.png) | ![play](screenshots/play.png) | ![multi](screenshots/multiplayer.png) |
 
-Autorzy i Licencja
+---
 
-Projekt został opracowany jako nowoczesna aplikacja quizowa o wysokim standardzie optymalizacji kodu.
+## Autorzy
 
-Technologie frontendowe: Kotlin & Android SDK.
+| Imię i nazwisko | Rola |
+|----------------|------|
+| **Kacper Bałabuch** | Android (Kotlin), Backend PHP |
+| **Daniel Wilk** | Android (Kotlin), Backend PHP |
+| **Aleksy Pietrzniak** | Android (Kotlin), Backend PHP |
 
-Technologie backendowe: PHP & MySQL.
+---
 
-Licencja: MIT.
+## Licencja
 
-Autorzy: Kacper Bałabuch, Daniel Wilk, Aleksy Pietrzniak
+Projekt udostępniony na licencji **MIT**. Szczegóły w pliku [LICENSE](LICENSE).
+
+---
+
+<div align="center">
+
+Made in Kotlin · PHP · MySQL
+
+</div>
