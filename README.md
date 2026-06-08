@@ -31,7 +31,7 @@
 - **Synchronizacja w czasie rzeczywistym** — polling co 1 s przez `sync_question.php`; automatyczny timeout po 15 s
 - **Wizualizacja rywali** — odpowiedzi przeciwników pokazane ikonką 👤 na przyciskach odpowiedzi
 - **Kolejne rundy** — host może wybrać nowy quiz bez opuszczania pokoju
-- **Ekran podium** — system wykrywa zwycięzcę, remis 🤝 i przegraną 💀
+- **Ekran podium** — system wykrywa zwycięzcę, remis i przegraną
 
 ### Kreator Quizów
 - Tworzenie nowych kategorii (quizów) z poziomu aplikacji
@@ -136,7 +136,7 @@
 
 4. **Uruchom aplikację**
    - Podłącz telefon z włączonym **USB Debugging** lub uruchom emulator
-   - Kliknij ▶ **Run app** w Android Studio
+   - Kliknij **Run app** w Android Studio
 
 5. **Czyszczenie przy problemach z zasobami**
    ```

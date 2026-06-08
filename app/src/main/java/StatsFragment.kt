@@ -90,17 +90,13 @@ class StatsFragment : Fragment() {
         activity?.runOnUiThread {
             if (!isAdded) return@runOnUiThread
 
-            // Wyświetlanie liczby gier
             tvGamesPlayedCount.text = games.toString()
 
-            // Poprawione, bezpieczne formatowanie procentów wyniku (np. "85%")
             tvBestScoreCount.text = getString(R.string.stats_format_accuracy, best)
 
-            // Dynamiczne szablony językowe z strings.xml
             tvAvgAccuracyValue.text = getString(R.string.stats_format_accuracy, accuracy)
             tvAvgTimeValue.text = getString(R.string.stats_format_time, time)
 
-            // Tłumaczenie ulubionego trybu gry w zależności od języka systemu
             val translatedMode = when (mode.lowercase()) {
                 "singleplayer" -> getString(R.string.stats_mode_singleplayer)
                 "multiplayer" -> getString(R.string.stats_mode_multiplayer)

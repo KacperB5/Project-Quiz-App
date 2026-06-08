@@ -86,10 +86,6 @@ class WelcomeActivity : AppCompatActivity() {
             .commit()
     }
 
-    /**
-     * Zapisuje kod języka w SharedPreferences, wywołuje globalną zmianę lokalizacji
-     * oraz wymusza przeładowanie aktualnego ekranu (recreate).
-     */
     private fun setAppLocale(languageCode: String) {
         val sharedPref = getSharedPreferences("QuizAppPrefs", MODE_PRIVATE)
         sharedPref.edit().putString("LANG", languageCode).apply()
@@ -104,10 +100,6 @@ class WelcomeActivity : AppCompatActivity() {
     }
 
     companion object {
-        /**
-         * Statyczna funkcja pomocnicza modyfikująca parametry lokalizacji (Configuration)
-         * dla dostarczonego kontekstu. Wspiera starsze i najnowsze wersje systemu Android.
-         */
         fun wrapContext(context: Context, language: String): Context {
             val locale = Locale(language)
             Locale.setDefault(locale)
