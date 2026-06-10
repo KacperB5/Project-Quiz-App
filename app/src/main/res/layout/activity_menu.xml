@@ -1,39 +1,97 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1E1E1E"
-    android:orientation="vertical"
-    android:padding="32dp">
+    android:background="#121212"
+    android:padding="24dp">
 
     <ImageView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/logo" />
+        android:id="@+id/ivLogo"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="48dp"
+        android:src="@drawable/logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+    <TextView
+        android:id="@+id/tvMenuTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/menu_title_singleplayer"
+        android:textColor="#FFFFFF"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:id="@+id/btnStworzQuiz"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#6200EE"
-        android:textSize="35dp"
-        android:text="Rozpocznij Quiz"
-        android:textColor="#FFFFFF" />
-
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnWybierzQuiz"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:backgroundTint="#03DAC5"
-        android:text="Wybierz Quiz"
-        android:textSize="35dp"
-        android:textColor="#000000" />
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:text="@string/btn_choose_quiz"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#6200EE"
+        app:cornerRadius="16dp"
+        android:elevation="6dp"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintTop_toBottomOf="@+id/tvMenuTitle"
+        app:layout_constraintBottom_toTopOf="@+id/btnStworzQuiz"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-</LinearLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnStworzQuiz"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/btn_create_own_quiz"
+        android:textSize="18sp"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#1E1E1E"
+        app:strokeColor="#6200EE"
+        app:strokeWidth="2dp"
+        app:cornerRadius="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnWybierzQuiz"
+        app:layout_constraintBottom_toTopOf="@+id/btnRanking"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnRanking"
+        android:layout_width="0dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/btn_view_ranking"
+        android:textSize="18sp"
+        android:textColor="#03DAC5"
+        android:backgroundTint="#1E1E1E"
+        app:strokeColor="#03DAC5"
+        app:strokeWidth="2dp"
+        app:cornerRadius="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnStworzQuiz"
+        app:layout_constraintBottom_toTopOf="@+id/btnBackToWelcome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnBackToWelcome"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="40dp"
+        android:text="@string/btn_back"
+        android:textSize="16sp"
+        android:textColor="#AAAAAA"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

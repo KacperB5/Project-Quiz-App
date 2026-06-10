@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_choose_quiz"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Wybierz Quiz" />
+    <item
+        android:id="@+id/nav_create_quiz"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Stwórz Quiz" />
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        android:title="Wyloguj" />
+</menu>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">QuizApp</string>
+
+    <string name="nav_quizzes">Quizy</string>
+    <string name="nav_ranking">Ranking</string>
+    <string name="nav_stats">Statystyki</string>
+    <string name="nav_about">Info</string>
+
+    <string name="welcome_user_format">Witaj, %1$s!</string>
+    <string name="welcome_user_default">Witaj, Użytkowniku!</string>
+    <string name="logout_btn">Wyloguj się</string>
+
+    <string name="select_mode_title">Wybierz tryb gry</string>
+    <string name="btn_singleplayer">Tryb jednoosobowy</string>
+    <string name="btn_multiplayer">Tryb wieloosobowy</string>
+
+    <string name="ranking_title">Globalny Ranking 🏆</string>
+    <string name="rank_header_num">#</string>
+    <string name="rank_header_player">GRACZ</string>
+    <string name="rank_header_points">PUNKTY</string>
+    <string name="pts_suffix">%1$d pkt</string>
+    <string name="ranking_load_error">Błąd podczas ładowania rankingu</string>
+
+    <string name="stats_title">Twoje Statystyki 📊</string>
+    <string name="stats_games_played">Rozegrane gry</string>
+    <string name="stats_best_score">Najlepszy wynik</string>
+    <string name="stats_analysis_header">Szczegóły profilu</string>
+    <string name="stats_avg_accuracy">Średnia trafność:</string>
+    <string name="stats_accuracy_value">%1$d%% poprawnych</string>
+    <string name="stats_avg_time">Czas odpowiedzi:</string>
+    <string name="stats_time_value">%1$.1f sekundy</string>
+    <string name="stats_fav_mode">Ulubiony tryb:</string>
+    <string name="stats_mode_singleplayer">Singleplayer</string>
+    <string name="stats_mode_multiplayer">Multiplayer</string>
+    <string name="stats_mode_none">Brak</string>
+    <string name="stats_mode_undefined">Nieokreślony</string>
+
+    <string name="tutorial_header">Jak grać? – Poradnik 💡</string>
+    <string name="tutorial_default_title">Rozpoczęcie gry</string>
+    <string name="tutorial_default_desc">Wybierz preferowany tryb w menu głównym. Możesz grać sam w trybie Singleplayer lub rzucić wyzwanie znajomym w trybie Multiplayer w czasie rzeczywistym!</string>
+    <string name="btn_back">Wstecz</string>
+    <string name="btn_next">Dalej</string>
+    <string name="btn_finish">Zakończ</string>
+    <string name="tutorial_step_counter">Krok %1$d z %2$d</string>
+
+    <string name="tutorial_step1_title">Wybór trybu</string>
+    <string name="tutorial_step1_desc">Wybierz preferowany tryb gry w menu głównym. Do Twojej dyspozycji jest tryb Singleplayer oraz starcia wieloosobowe Multiplayer w czasie rzeczywistym!</string>
+
+    <string name="tutorial_step2_title">Odpowiadanie na pytania</string>
+    <string name="tutorial_step2_desc">Każde pytanie ma ograniczony czas (10 sekund). Przeczytaj uważnie treść i kliknij poprawną odpowiedź, zanim skończy się czas. Kolor zielony oznacza sukces, czerwony porażkę!</string>
+
+    <string name="tutorial_step3_title">Lobby wieloosobowe</string>
+    <string name="tutorial_step3_desc">W trybie sieciowym możesz utworzyć pokój lub dołączyć do istniejącego za pomocą unikalnego kodu PIN. Odpowiedzi Twojego przeciwnika są widoczne jako ikony gracza na przyciskach!</string>
+
+    <string name="tutorial_step4_title">Statystyki profilu</string>
+    <string name="tutorial_step4_desc">Przejdź do zakładki „Statystyki”, aby szybko sprawdzić liczbę rozegranych gier, najlepszą trafność, średni czas odpowiedzi oraz ulubione tryby pobrane prosto z serwera!</string>
+
+    <string name="metadata_header">O metadanych gry</string>
+    <string name="app_version_label">Wersja stabilna 1.0.5</string>
+    <string name="app_description_text">Ta aplikacja to nowoczesna platforma edukacyjno-rozrywkowa. Pozwala graczom na dynamiczne testowanie swojej wiedzy, podgląd statystyk w czasie rzeczywistym oraz tworzenie unikalnych pokoi wieloosobowych!</string>
+    <string name="authors_header">Autorzy i Zespół IT</string>
+    <string name="authors_description_text">Projekt napisany w 100% natywnie w języku Kotlin.\nBackend w PHP i baza danych MySQL na Alwaysdata.\nAsynchroniczna komunikacja sieciowa dzięki bibliotece Volley.</string>
+
+    <string name="quiz_no_questions">Ten quiz nie ma jeszcze żadnych pytań!</string>
+    <string name="quiz_load_error">Błąd podczas odczytywania danych z serwera.</string>
+    <string name="quiz_connection_error">Błąd połączenia z serwerem!</string>
+    <string name="quiz_waiting_opponent">Oczekiwanie na przeciwnika...</string>
+    <string name="score_final_score">Twój wynik: %1$d / %2$d</string>
+    <string name="score_percentage">%1$d%%</string>
+    <string name="score_time_summary">Całkowity czas: %1$s\nŚredni czas na pytanie: %2$ds</string>
+    <string name="btn_return_menu">Powrót do menu</string>
+    <string name="db_save_success">Zapisano pomyślnie!</string>
+    <string name="db_save_error">Błąd podczas zapisywania wyników: %1$s</string>
+
+    <string name="menu_title_singleplayer">Tryb jednoosobowy</string>
+    <string name="btn_choose_quiz">Wybierz quiz</string>
+    <string name="btn_create_own_quiz">Stwórz własny quiz</string>
+    <string name="btn_view_ranking">Tablica wyników</string>
+
+    <string name="menu_title_multiplayer">Tryb wieloosobowy</string>
+    <string name="multiplayer_invite_friend">Zaproś znajomego</string>
+    <string name="btn_2_players">2 Graczy</string>
+    <string name="btn_3_players">3 Graczy</string>
+    <string name="multiplayer_join_game">Dołącz do gry</string>
+    <string name="hint_enter_pin">Wprowadź 4-cyfrowy PIN</string>
+    <string name="btn_join">Dołącz!</string>
+
+    <string name="winner_text">WYGRAŁEŚ! 🏆</string>
+    <string name="default_host_name">Gospodarz</string>
+    <string name="default_guest1_name">Gość 1</string>
+    <string name="default_guest2_name">Gość 2</string>
+    <string name="btn_next_round">Wybierz kolejny quiz</string>
+    <string name="btn_leave">Zakończ grę</string>
+
+    <string name="quiz_loading_question">Ładowanie pytania...</string>
+
+    <string name="add_quiz_header">Kreator Quizów</string>
+    <string name="add_quiz_category_label">Nazwa nowej kategorii:</string>
+    <string name="hint_quiz_category">np. Historia, Filmy...</string>
+    <string name="btn_create_quiz_and_add">Utwórz i dodaj pytania</string>
+
+    <string name="choose_quiz_header">Wybierz Quiz</string>
+    <string name="btn_back_to_menu">Powrót do Menu</string>
+
+    <string name="create_questions_header">Kreator Pytań</string>
+    <string name="select_category_label">Wybierz kategorię:</string>
+    <string name="btn_add_new_category">+ Stwórz zupełnie nowy quiz</string>
+    <string name="hint_enter_question">Wprowadź treść pytania...</string>
+    <string name="hint_media_url">Link do zdjęcia lub wideo (Opcjonalnie)</string>
+    <string name="hint_answer_a">Odpowiedź A</string>
+    <string name="hint_answer_b">Odpowiedź B</string>
+    <string name="hint_answer_c">Odpowiedź C</string>
+    <string name="hint_answer_d">Odpowiedź D</string>
+    <string name="correct_answer_label">Która odpowiedź jest poprawna?</string>
+    <string name="btn_submit_question_db">Dodaj pytanie do bazy danych</string>
+
+    <string name="lobby_pin_header">Kod Twojego pokoju:</string>
+    <string name="lobby_waiting_msg">Oczekiwanie na wprowadzenie kodu przez znajomego...\nGra rozpocznie się automatycznie.</string>
+    <string name="btn_cancel_and_back">Anuluj i wróć</string>
+
+    <string name="hint_username">Nazwa użytkownika</string>
+    <string name="hint_password">Hasło</string>
+    <string name="btn_login_submit">Zaloguj się</string>
+    <string name="btn_create_account">Utwórz konto</string>
+
+    <string name="register_title">Utwórz nowe konto</string>
+    <string name="hint_email">Adres e-mail</string>
+    <string name="btn_register_submit">Zarejestruj się</string>
+    <string name="btn_already_have_account">Masz już konto? Zaloguj się</string>
+
+    <string name="score_quiz_ended">Quiz Zakończony! 🎉</string>
+    <string name="score_time_label_format">Czas gry: %1$s</string>
+    <string name="score_time_default">Czas gry: 00:00</string>
+    <string name="btn_return_menu_text">Powrót do Menu</string>
+
+    <string name="quiz_card_title_default">Tytuł Quizu</string>
+    <string name="quiz_author_format">Twórca: %1$s</string>
+    <string name="quiz_author_default">Twórca: System</string>
+    <string name="quiz_questions_count_format">Pytania: %1$d</string>
+    <string name="quiz_questions_count_default">Pytania: 0</string>
+
+    <string name="rank_name_default">Nazwa gracza</string>
+
+    <string name="stats_default_accuracy">0%% poprawnych</string>
+    <string name="stats_default_time">0.0 sekundy</string>
+    <string name="stats_format_accuracy">%1$d%% poprawnych</string>
+    <string name="stats_format_time">%1$.1f sekundy</string>
+
+    <string name="stats_default_count">0</string>
+    <string name="stats_default_percent">0%</string>
+</resources>

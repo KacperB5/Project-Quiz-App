@@ -11,17 +11,23 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
 
-        val btnStworzQuiz = findViewById<Button>(R.id.btnStworzQuiz)
-        val btnWybierzQuiz = findViewById<Button>(R.id.btnWybierzQuiz)
+        val btnWybierz = findViewById<Button>(R.id.btnWybierzQuiz)
+        val btnStworz = findViewById<Button>(R.id.btnStworzQuiz)
+        val btnRanking = findViewById<Button>(R.id.btnRanking)
+        val btnBack = findViewById<Button>(R.id.btnBackToWelcome)
 
-        btnStworzQuiz.setOnClickListener {
-            val intent = Intent(this, CreateQuizActivity::class.java)
-            startActivity(intent)
+        btnWybierz.setOnClickListener {
+            startActivity(Intent(this, ChooseQuizActivity::class.java))
         }
 
-        btnWybierzQuiz.setOnClickListener {
-            val intent = Intent(this, ChooseQuizActivity::class.java)
-            startActivity(intent)
+        btnStworz.setOnClickListener {
+            startActivity(Intent(this, CreateQuizActivity::class.java))
         }
+
+        btnRanking.setOnClickListener {
+            startActivity(Intent(this, RankingActivity::class.java))
+        }
+
+        btnBack.setOnClickListener { finish() }
     }
 }
